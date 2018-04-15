@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	
+  	<meta charset="utf-8">
+    <title>yunSou.html</title>
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	    
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  <script type="text/javascript">
+  	var p=1;
+  function showList(p,q){
+  			$.ajax({
+  				url:"search",
+  				data:{"p":p,"q":q},
+  				dataType:"json",
+  				success:function(json){
+  					console.info(json);
+  					var list = json.showapi_res_body.pagebean.contentlist;
+  					for(var i=0;i<list.length;i++){
+  						var data=list[i];
+  						var a=" <button type='button' class='list-group-item gi' url='{url}'>{title}</button>";
+  						a=a.replace("{url}",data.url).replace("{title}","["+data.category+"]"+data.title);
+  						var content=$("#contentList").append(a);
+  					}
+  					$(".gi").click(function(){
+  						window.location=$(this).attr("url");
+  					});
+  					/* $(".list-group-item").click(function(){
+  						window.location=$(this).attr("url");
+  					}); */
+  				}
+  			});
+  	};
+  	$(function(){
+  		$("#btn").click(function(){
+  			var textList=$("#textList").val();
+  			$(".gi").remove();
+  			showList(p,textList);
+  		});
+  		$("#btnMore").click(function(){
+  			var textList=$("#textList").val();
+  			p=p+1;
+  			showList(p,textList);
+  		});
+  	});
+  </script>
+  <body class="container">
+    	<div class="col-lg-2 col-xs-offset-3" style="margin-top: 30px;border: solid 1px" >
+    		<div>
+    			<img alt="" src="logo.png" >
+    		</div>
+    		<input id="textList" type="text" class="form-control" placeholder="请输入查询的关键字" style="margin-top: 20px;width:200px">
+    		<button type="button" class="btn btn-primary btn-xs" style="margin-top: 10px" id="btn">查询</button>
+    		
+    		<div class="list-group" style="margin-top: 10px" id="contentList">
+			  <a href="#" class="list-group-item active"><span >查询结果</span></a>
+			</div>
+    	</div>	
+    	
+    	<div class="col-xs-12" >
+			<button id="btnMore" type="button" class="btn btn-warning btn-lg btn-block" style="margin-top:10px">点击加载更多...</button>
+		</div>
+		<div class="col-xs-12" style="height:50px">&nbsp;</div>
+  </body>
+</html>

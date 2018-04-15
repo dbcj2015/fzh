@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  	<title>My EasyUI</title>
+  	<link type="text/css" rel="stylesheet" href="style/default/easyui.css" />
+		<link type="text/css" rel="stylesheet" href="style/icon.css"/>
+		<script type="text/javascript" src="script/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="script/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="script/easyui-lang-zh_CN.js"></script>
+		<script>
+        	$(
+				function(){
+					$(".easyui-tree").tree({
+						onClick: function(node){
+							//判断页签是否打开
+							var tabExists = $("#tabsContainer").tabs("exists" , node.text);
+							if(tabExists == true){
+								$("#tabsContainer").tabs("select" , node.text);
+								return;
+							}
+							//新增一个“职位管理”标签页
+							if(node.attributes != null && node.attributes.href != null){
+								$("#tabsContainer").tabs("add" , {
+									title : node.text , 
+									closable : true , 
+									selected : true ,
+									href : node.attributes.href
+								});
+							}
+						}										
+					});
+				}
+			);
+        </script>
+  	</head>
+			<body class="easyui-layout">
+				<div data-options = "region:'north',width:100" style = "height:130px" >
+                	<img src="image/logo.png" style="width:100%;height:98%"></div>
+                </div>
+				    <div  data-options = "region:'west' , title:'功能清单' , split:true , width:250" >
+					    <div class="easyui-accordion" data-options="fit:true,border:false">
+					             <div title="综合台账" data-options="iconCls:'icon-reload'">
+					                <ul class="easyui-tree">
+                                        <li>
+                                            <span>综合台账管理</span>
+                                            <ul>
+                                                <li data-options = "attributes:{href : 'modules/accounts/purchase/index.html'}">合同管理</li>
+                                                <li data-options = "attributes:{href : 'modules/accounts/store/index.html'}">设备入库</li>
+                                                <li data-options = "attributes:{href : 'modules/accounts/distribution/index.html'}">设备下发</li>
+                                                <li data-options = "attributes:{href : 'modules/accounts/receive/index.html'}">设备接收</li>
+                                                <li data-options = "attributes:{href : 'modules/accounts/takeout/index.html'}">设备领用</li>
+                                                <li data-options = "attributes:{href : 'modules/accounts/takeback/index.html'}">设备回收</li>
+                                                <li data-options = "attributes:{href : 'modules/accounts/invalidate/index.html'}">设备报废</li>
+                                            </ul>
+                                        </li>
+					                </ul>
+					            </div>
+					            <div title="设备维护" data-options="iconCls:'icon-reload'">
+									<ul class="easyui-tree" >
+                                        <li>
+                                            <span>设备维护</span>
+                                            <ul>
+                                                <li data-options = "attributes:{href : 'modules/maintenance/breakdown/index.html'}">设备故障登记</li>
+                                                <li data-options = "attributes:{href : 'modules/maintenance/recover/index.html'}">设备维修登记</li>
+                                                <li data-options = "attributes:{href : 'modules/maintenance/breakdown/query.html'}">设备故障记录查询</li>
+                                                <li data-options = "attributes:{href : 'modules/maintenance/recover/query.html'}">设备维修记录查询</li>
+                                            </ul>
+                                        </li>
+					                </ul>                                
+                                </div>
+					            <div title="系统设置" data-options="iconCls:'icon-reload'">
+                                	<ul class="easyui-tree">
+                                        <li>
+                                            <span>基本信息管理</span>
+                                            <ul>
+                                                <li data-options = "attributes:{href : 'modules/dictionary/branch/index.html'}">组织机构管理</li>
+                                                <li data-options = "attributes:{href : 'modules/dictionary/account/index.html'}">系统账户管理</li>
+                                                <li data-options = "attributes:{href : 'modules/dictionary/project/index.html'}">项目管理</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span>设备信息管理</span>
+                                            <ul>
+                                                <li data-options = "attributes:{href : 'modules/dictionary/goodstype/index.html'}">设备类型管理</li>
+                                                <li data-options = "attributes:{href : 'modules/dictionary/brand/index.html'}">设备品牌管理</li>
+                                                <li data-options = "attributes:{href : 'modules/dictionary/product/index.html'}">设备型号管理</li>
+                                                <li data-options = "attributes:{href : 'modules/dictionary/vender/index.html'}">供应商管理</li>
+                                            </ul>
+                                        </li>
+					                </ul>
+                                </div>
+					        </div> 
+				    </div>
+				    <div data-options = "region:'center'">
+                        <div class="easyui-tabs" data-options="fit:true" id = "tabsContainer">
+                            <div title="首页" style="padding:10px">
+                                <img src="image/welcome.jpg" style = "width:100%;height:100%"/>
+                            </div>
+                        </div>
+                    </div>
+			</body>
+</html>

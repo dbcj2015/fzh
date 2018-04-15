@@ -1,0 +1,72 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看合同明细</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridDetail").datagrid({
+					url:"modules/accounts/purchaseDetail/purchaseDetail.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'设备类型',width:100},
+						{field:'b',title:'设备品牌',width:100} ,
+						{field:'c',title:'设备型号',width:100},
+						{field:'d',title:'标准配置',width:200},
+						{field:'e',title:'单位',width:50},
+						{field:'f',title:'单价金额',width:100},
+						{field:'g',title:'购买数量',width:100},
+						{field:'i',title:'保修期(月)',width:100},
+						{field:'j',title:'巡检阀值(次/年)',width:100},
+						{field:'k',title:'折旧率(%)',width:100},
+						{field:'l',title:'备注',width:200},
+						{field:'m',title:'设备状态',width:100}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbdetail' ,
+					pagination : true//分页栏
+				});
+				$("#tlbDetailNew , #tlbDetailEdit").click(function(){
+						$("#dlgMain").dialog({
+						  width:300,
+						  height:500,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/accounts/purchaseDetail/editform.html'
+						});
+					}
+				)
+				
+				$("#tlbDetailDelete").click(function(){
+					$.messager.confirm('警告', '确定要删除选中的记录吗?', function(r){
+						if (r){
+							// exit action;
+						}
+					});
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'gridDetail'></table>
+    	<div id="tbdetail">
+   		<div style="border-bottom:1px solid #ccc ; padding: 5px 0px 5px 5px">
+        	<a id = "tlbDetailNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新建</a>
+			<a id = "tlbDetailEdit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a id = "tlbDetailDelete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        </div>
+
+		<div style="padding: 5px 0px 5px 5px">
+			J01AB2Y合同明细清单&nbsp;&nbsp;[项目名称：XXX项目，总行调拨资金]
+        </div>
+	</div>
+    <div id="dlgMain"></div>
+</body>
+</html>

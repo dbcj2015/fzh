@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.RoleDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Role">
+		INSERT INTO t_role (role_name)
+		VALUES (#{roleName})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Role">
+		UPDATE t_role
+			SET  
+				role_id = #{roleId}
+				,role_name = #{roleName}
+			WHERE role_id = #{roleId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_role where role_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Role">
+		select
+				t.role_id roleId ,
+				t.role_name roleName 
+		from t_role t where t.role_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.role_id roleId ,
+				t.role_name roleName 
+		 from t_role t where 1=1 
+		<if test="roleId != null">
+		and t.role_id =#{roleId}
+		</if>
+		<if test="roleName != null">
+		and t.role_name =#{roleName}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_role t where 1=1 
+		<if test="roleId != null">
+		and t.role_id =#{roleId}
+		</if>
+		<if test="roleName != null">
+		and t.role_name =#{roleName}
+		</if>
+	</select>
+	
+	<select id="findRoleFunctions" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+		SELECT s.* , s.function_id functionId ,s.function_name functionName , CASE ISNULL(role_id)  WHEN FALSE THEN 1 ELSE 0 END has_promission FROM (
+			SELECT f.* , m.module_name moduleName ,(SELECT role_id FROM t_role_function rf WHERE rf.function_id = f.function_id AND rf.role_id = #{roleId}) role_id FROM t_function f , t_module m
+			WHERE f.module_id = m.module_id
+		) s	
+	</select>
+
+</mapper>

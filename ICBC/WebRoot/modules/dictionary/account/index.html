@@ -1,0 +1,66 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridAccount").datagrid({
+					url:"modules/dictionary/account/account.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'机构名称',width:100 },
+						{field:'b',title:'用户名',width:100 },
+						{field:'c',title:'管理员级别',width:100},
+						{field:'d',title:'管理员姓名',width:100}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbAccount' ,
+					pagination : true//分页栏
+				});
+				$("#tlbAccountNew , #tlbAccountEdit").click(function(){
+						$("#dlgAccountMain").dialog({
+						  width:330,
+						  height:280,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/dictionary/account/editform.html'
+						});
+					}
+				);
+								
+				$("#tlbAccountDelete").click(function(){
+					$.messager.confirm('警告', '确定要删除选中的记录吗?', function(r){
+						if (r){
+							// exit action;
+						}
+					});
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'gridAccount'></table>
+    <div id="tbAccount">
+
+		<div style="padding: 5px 0px 5px 5px">
+            <label>机构名称:</label>
+            <input class="easyui-validatebox" style="width:100px"></input>
+            <label>管理员姓名:</label>
+            <input class="easyui-validatebox" style="width:100px"></input>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a>
+            <a id = "tlbAccountNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新建</a>
+			<a id = "tlbAccountNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a id = "tlbAccountNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        </div>
+	</div>
+    <div id="dlgAccountMain"></div>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+    <title>emp.html</title>
+	<!-- 主题文件 -->
+	<link href="themes/default/easyui.css" rel="stylesheet" type="text/css">
+	<!-- 图标CSS -->
+	<link href="themes/icon.css" rel="stylesheet" type="text/css">
+	<!-- 先导入jquery.js,再导入easyui-min.js;easyui是在jquery基础上包装而成 -->
+	<script type="text/javascript" src="script/jquery.min.js"></script>
+	<script type="text/javascript" src="script/jquery.easyui.min.js"></script>
+	<!-- 引入汉化包 -->
+	<script type="text/javascript" src="script/easyui-lang-zh_CN.js"></script>
+  </head>
+  <script type="text/javascript">
+  /*验证输入信息*/
+
+  		$.extend($.fn.validatebox.defaults.rules,{    
+  		    validName: {    
+  		        validator: function(value,param){    
+  		           var regex=/(^[\u4e00-\u9fa5]{2,10}$)|(^[A-Z][a-z]{0,} [A-Z][a-z]{0,}$)/;
+  		           var result=regex.test(value);
+  		           return result;
+  		        },    
+  		        message: "请输入正确的用户名"   
+  		    }    
+  		}); 
+  	$.extend($.fn.validatebox.defaults.rules, { //这是写死的   
+		    validMobile: {//验证规则名称
+		        validator: function(value,param){ //这也是写死的   
+		        	var regex =  /^1(33|34|78|31|88|89|32|35|30|59|87|39)\d{8}$/;
+	        		var result = regex.test(value);//将输入的内容与正则进行匹配，匹配成功返回true 否则返回false
+	        		//验证规则，对输入的数据继续验证，验证通过返回true验证失败返回false  
+	        		return result;
+		        },    
+		        message: "请输入正确的11位手机号码" //验证失败的时候显示的文本  
+		    }    
+		});
+		
+		$.extend($.fn.validatebox.defaults.rules, { //这是写死的   
+		    validDefaultOption: {//验证规则名称
+		        validator: function(value,param){ //这也是写死的   
+		        	if(value == "请选择"){
+		        		return false;
+		        	}else{
+		        		return true;
+		        	}
+		        },    
+		        message: "请选择有效的选项" //验证失败的时候显示的文本  
+		    }    
+		});
+			
+		var oper="create";	
+  	function jobFormat(value,row,index){
+  		if(row.job == 1){
+			return "市场经理";
+		}else if(row.job == 2){
+			return "咨询师";
+		}else if(row.job == 3){
+			return "实训师";
+		}
+  	}
+  	
+  //rowStyler则是根据指定的条件，来美化对应的行
+	function highlightD1(index,row ){
+		//console.info(row);
+		if(row.dept_id == 1){
+			return "color:red;font-weight:bold";
+		}else if(row.dept_id==2){
+			return "background-color:lightgreen";
+		}else if(row.dept_id==3){
+			return "text-decoration:underline";
+		}
+	}
+  
+  	$(function(){
+  		/*创建对话框的另外一种方式:class="easyui-dialog*/
+  		$("#add").click(function(){
+  			oper="add";
+  			$("#window").dialog({
+  				title:"员工信息表单",
+  				width:300,
+  				height:300,
+  				buttons:"#btn",//在对话框中增加两个“保存”，“取消”按钮
+  				modal:true
+  			});
+  		});
+  	
+  		$("#cmbDept").combobox({
+  			url:"dept/create",
+  			valueField:"dept_id",    
+  		    textField:"dname" ,
+  		 	value : -1
+  		});
+  	});
+  	
+  	//点击保存按钮将表单的数据填充到页面表格中
+  	$(function(){
+  		$("#btnSave").click(function(){
+  			//alert(oper);
+  			$("#frm").form("submit",{
+  				url:"emp/"+oper,
+  				success:function(date){
+  					console.info(date);
+  					var json = $.parseJSON(date);//将服务器返回的字符串转为JSON对象
+  					console.info(json);
+  					if(json.result==true){
+  						//关闭对话框
+  						$("#window").dialog("close");
+  						//如果不清除对话框，再次添加时还会保留原始添加的信息
+  						$("#frm").form("clear");
+  						$("#cmbDept").combobox("setValue",-1);
+  						$("#cmbJob").combobox("setValue",-1);
+  						//将新数据重新加载到表格中
+  						$("#gridEmp").datagrid("reload");
+  					}else{
+						$.messager.alert("错误" , json.message ,"error");
+					}
+  				}
+  			});
+  		});
+  	});
+  	
+  	$(function(){
+  		$("#update").click(function(){//一旦点击就会给浏览器发送请求
+  			//getSelections属性会将选中的数据自动添加到会话框中--通过浏览器输出，可以显示选中的数据
+  			var recs=$("#gridEmp").datagrid("getSelections");
+  			if(recs.length==0 || recs.length>1){
+  				$.messager.alert("警告","请选择一条需要修改的记录","warning");  
+  				return;
+  			}
+  			console.info(recs);
+  			oper="update";
+  			//后台输出结果的键名，也就是字段field的取值必须与对话框中字段名一致，才可以将页面中选中的数据自动填充到对话框中进行修改
+  			$("#window").dialog({
+  				title:"员工信息表单",
+  				width:300,
+  				height:300,
+  				buttons:"#btn",
+  				modal:true
+  			});
+  			//$("#cmbDept").combobox("setValue" , recs[0].dept_id);
+			//load方法会将数据中的属性与输入项的name相同的自动填充
+			$("#frm").form("load" , recs[0]);
+  		});
+  	});
+  	//删除按钮
+  	$(function(){
+  		$("#delete").click(function(){
+  			var recs=$("#gridEmp").datagrid("getSelections");
+  			if(recs.length==0){
+  				$.messager.alert("警告","请选择至少一条需要删除的记录","warning");
+  				return;
+  			}
+  			console.info(recs);
+	  		oper="delete";
+	  		//拼接需要发送的字符串
+	  		var ids="";
+	  		for(i=0;i<recs.length;i++){
+	  			ids=ids+"&"+"emp_id="+recs[i].emp_id;
+	  		}
+	  		//确认对话框
+	  		$.messager.confirm("确认","确认需要删除"+recs.length+"条记录?",function(r){
+	  			if(r==true){//点击确认按钮利用ajax发送数据请求
+	  				$.ajax({
+	  					url:"emp/delete?"+ids,
+	  					type:"post",
+	  					//返回类型
+	  					dataType:"json",
+	  					success:function(data){
+	  						if(data.result==true){
+	  							$.messager.alert("通知",data.message,"info",function(){
+	  								$("#gridEmp").datagrid("reload");//刷新页面
+	  							});
+	  						}else{
+								$.messager.alert("错误" , data.message ,"error");
+							}
+	  					}
+	  				});
+	  			}
+	  		});
+  		});
+  	});
+  </script>
+  <style type="text/css">
+  	
+  </style>
+  <body>
+   	<table id="gridEmp" title="员工管理" rowStyler="highlightD1" toolbar="#tb" class="easyui-datagrid" fit=true pagination=true url="emp/create">
+   		<thead>
+   			<tr>
+   				<!-- 以下数据中filed的取值必须与数据库中对应的字段值相同 -->
+   				<th checkbox="true" field=""></th>
+   				<th width="100px" field="emp_id">员工编号</th>
+   				<th width="100px" field="name">姓名</th>
+   				<th width="100px" field="dept_id">部门</th>
+   				<th width="100px" field="mobile">手机</th>
+   				<th width="100px" field="job" formatter="jobFormat">岗位</th>
+   				<th width="100px" field="email">邮箱</th>
+   			</tr>
+   		</thead>
+   	</table>
+   	<div id="tb">
+   		<a id="add" href="#" class="easyui-linkbutton" plain=true data-options="iconCls:'icon-add'">增加</a>
+   		<a id="update" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
+   		<a id="delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'">删除</a>
+   	</div>
+   	<div id="window" >
+   		<form method="post" id="frm">
+   			<table>
+   				<tr>
+   					<input type="text" name="emp_id"/>
+   					<td>姓名</td>
+   					<td style="width:75px"><input class="easyui-textbox" id="uname" name="name" type="text" value="" validType="validName" required=true/></td>
+   				</tr>
+   				<tr>
+   					<td>部门</td>
+   					<td style="width:75px">
+   						<select id="cmbDept" name="dept_id" style="width:100px" class="easyui-combobox" validType="validDefaultOption" required=true></select>
+   					</td>
+   				</tr>
+   				<tr>
+   					<td>手机号</td>
+   					<td style="width:75px"><input class="easyui-textbox" id="phone" name="mobile" type="text" value="" validType="validMobile" required=true/></td>
+   				</tr>
+   				</tr>
+   				<tr>
+   					<td>岗位</td>
+   					<td >
+   						<select name="job" id="cmbJob" style="width:100px" class="easyui-combobox" validType="validDefaultOption" required=true>
+   							<option value="-1">请选择</option>
+   							<option value="1">市场经理</option>
+							<option value="2">咨询师</option>
+							<option value="3">实训师</option>
+						</select>
+   					</td>
+   				</tr>
+   				<tr>
+					<td style="width:100px">电子邮箱</td>
+					<td><input id="email" name="email" type="text" class="easyui-textbox" style="width:200px" required=true></td>
+				</tr>
+   			</table>
+   		</form>
+   	</div>
+	<div id="btn">
+		<a id="btnSave" href="#" class="easyui-linkbutton">保存</a>
+		<a href="#" class="easyui-linkbutton">关闭</a>
+	</div>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridRecoverQuery").datagrid({
+					//定义列
+					columns:
+					[
+						[
+							
+							{field:'a',title:'所在单位',width:100},
+							{field:'b',title:'所在部门',width:100},			
+							{field:'c',title:'设备编号',width:100},
+							{field:'d',title:'设备类型',width:100},
+							{field:'e',title:'设备品牌',width:100},
+							{field:'f',title:'设备型号',width:100},	
+							{field:'h',title:'故障时间',width:100},
+							{field:'i',title:'维修公司',width:100},
+							{field:'j',title:'维修费用',width:100},
+							{field:'k',title:'维修内容',width:300},
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbRecoverQuery' ,
+					pagination : true//分页栏
+				});	
+				
+				$("#tlbRecoverQuery").click(function(){
+					$("#dlgRecoverQueryMain").dialog({
+						title : " " , 
+						width : 300 , 
+						height : 250 , 
+						href : "modules/maintenance/RecoverQuery/editform.html"
+					});	
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'gridRecoverQuery'></table>
+    <div id="tbRecoverQuery">
+    	<div style="border-bottom:1px solid #ccc ; padding: 5px 0px 5px 5px">
+        查询条件：
+        </div>
+		<div style="padding: 5px 0px 5px 5px">
+            <label>所属机构:</label><select class="easyui-combox" style="width:100px"><option>请选择单位</option></select>
+            <label>所属部门:</label><select class="easyui-combox" style="width:100px"><option>请选择部门</option></select>
+            <label>设备编号:</label><input class="easyui-validatebox" style="width:100px"></input>
+        </div>
+        <div style="padding: 5px 0px 5px 5px">    
+            <label>设备类型:</label><select class="easyui-combox" style="width:100px"><option>请选择类型</option></select>
+            <label>设备品牌:</label><select class="easyui-combox" style="width:100px"><option>请选择品牌</option></select>
+            <label>设备型号:</label><select class="easyui-combox" style="width:100px"><option>请选择型号</option></select>
+       	</div>     
+       	<div style="padding: 5px 0px 5px 5px">     
+            <label>维修公司:</label><select class="easyui-combox" style="width:100px"><option>请选择维修公司</option></select>
+            <label>维修时间:</label><input class="easyui-datebox" style="width:100px"></input>-<input class="easyui-datebox" style="width:100px"></input>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">导出</a>
+        </div>
+	</div>
+    <div id="dlgRecoverQueryMain"></div>
+</body>
+</html>

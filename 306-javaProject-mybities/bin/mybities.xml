@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 只有引入以下dtd文件，才可以方便使用快捷键 -->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- environments用来配置数据库的连接信息 -->
+	<environments default="dev"><!-- 默认连接dev环境所指定的数据库 -->
+		<environment id="dev"><!-- dev开发环境 -->
+			<!-- 事务管理器，采用JDBC方式管理数据库事务，刚开始使用的时候这句话先写死，后面我们仔细讲解 -->
+			<transactionManager type="jdbc"></transactionManager>
+			<dataSource type="POOLED"><!-- 利用数据库连接池来管理数据库，这也是写死的，同时也是Mybatis的最佳配置 -->
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+		        <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=UTF-8"/>
+		        <property name="username" value="root"/>
+		        <property name="password" value="root"/>
+			</dataSource>
+		</environment>
+		
+		<environment id="test"><!-- 测试环境 -->
+			<!-- 事务管理器，采用JDBC方式管理数据库事务，刚开始使用的时候这句话先写死，后面我们仔细讲解 -->
+			<transactionManager type="jdbc"></transactionManager>
+			<dataSource type="POOLED"><!-- 利用数据库连接池来管理数据库，这也是写死的，同时也是Mybatis的最佳配置 -->
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+		        <property name="url" value="jdbc:mysql://177.53.88.92:3370/ptcal?useUnicode=true&amp;characterEncoding=UTF-8"/>
+		        <property name="username" value="ptcal"/>
+		        <property name="password" value="UASQJL"/>
+			</dataSource>
+		</environment>
+		
+		
+		<environment id="uat"><!-- UAT用户验收环境 -->
+			<!-- 事务管理器，采用JDBC方式管理数据库事务，刚开始使用的时候这句话先写死，后面我们仔细讲解 -->
+			<transactionManager type="jdbc"></transactionManager>
+			<dataSource type="POOLED"><!-- 利用数据库连接池来管理数据库，这也是写死的，同时也是Mybatis的最佳配置 -->
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+		        <property name="url" value="jdbc:mysql://177.88.88.92:3370/ptcal?useUnicode=true&amp;characterEncoding=UTF-8"/>
+		        <property name="username" value="ptcal"/>
+		        <property name="password" value="ADS"/>
+			</dataSource>
+		</environment>
+		
+		<environment id="runtime"><!-- 线上环境 -->
+			<!-- 事务管理器，采用JDBC方式管理数据库事务，刚开始使用的时候这句话先写死，后面我们仔细讲解 -->
+			<transactionManager type="jdbc"></transactionManager>
+			<dataSource type="POOLED"><!-- 利用数据库连接池来管理数据库，这也是写死的，同时也是Mybatis的最佳配置 -->
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+		        <property name="url" value="jdbc:mysql://177.230.88.92:3370/ptcal?useUnicode=true&amp;characterEncoding=UTF-8"/>
+		        <property name="username" value="ptcal"/>
+		        <property name="password" value="DASDSA"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 将映射配置文件引入 -->
+	<!-- 使用/的方式将emp.xml文件加载 
+			例如:com/bjsxt/mybatis/emp.xml
+		-->
+	<mappers>
+		<mapper resource="com/bjsxt/map/emp.xml"/>
+	</mappers>
+</configuration>

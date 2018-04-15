@@ -1,0 +1,71 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#editform table td{
+		padding : 3px;
+	}
+</style>
+
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridTakeOutEdit").datagrid({
+					url:"modules/accounts/takeout/takeoutdetail.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'设备类型',width:100 },
+						{field:'b',title:'设备品牌',width:100},
+						{field:'c',title:'设备型号',width:100},
+						{field:'d',title:'设备编号',width:100 ,editor:'text' , formatter : function(value , row , index){return "<input type = 'text' value = '" + value + "'></input>"}},
+						{field:'e',title:'SN',width:100 ,editor:'text' , formatter : function(value , row , index){return "<input type = 'text' value = '" + value + "'></input>"}},
+						{field:'f',title:'IP地址',width:100 ,editor:'text', formatter : function(value , row , index){return "<input type = 'text' value = '" + value + "'></input>"}},
+						{field:'g',title:'使用人',width:100 ,editor:'text', formatter : function(value , row , index){return "<input type = 'text' value = '" + value + "'></input>"}}
+						]
+					],
+					singleSelect:true,//单选模式
+					//fit:true, //平铺
+					height : 200,	
+					toolbar : '#tbTakeOutEdit' 
+				});
+			}
+		);
+		
+		$(function(){
+			$("#btnTakeOutSave").click(
+				function(){
+					$("#dlgTakeOutEditMain").dialog({
+					  width:900,
+					  height:400,
+					  modal:true,
+					  title : ' ' , 
+					  content : "<img src='image/nw180pic/takeoutvoucher.png'></img>"
+					});
+				}
+			);
+		})		
+	</script>
+
+    <form id="editform" method="post" style="margin:5px" >
+        <table id = 'gridTakeOutEdit' ></table>
+        <div id="tbTakeOutEdit">
+                <div style="padding: 5px 0px 5px 5px">
+                <label>&nbsp;&nbsp;领用单位:</label>
+                <select class="easyui-combobox" style = "width:100px" >
+                    <option value="0">XXX分行</option>
+                    <option value="1">XXX支行</option>
+                    <option value="2">XXX网点</option>
+                </select>
+				<a id="btnTakeOutSave"href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">保存</a>
+            </div>
+        </div>
+    </form>
+    <div id="dlgTakeOutEditMain"></div>
+</body>
+</html>

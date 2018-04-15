@@ -1,0 +1,66 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridRecive").datagrid({
+					url:"modules/accounts/receive/recive.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'项目名称',width:100},
+						{field:'c',title:'设备类型',width:100},
+						{field:'d',title:'设备品牌',width:100},
+						{field:'e',title:'设备型号',width:100},
+						{field:'f',title:'单价',width:100},
+						{field:'g',title:'下发数量',width:100}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbRecive' ,
+					pagination : true//分页栏
+				});
+				
+				$("#tlbRecive").click(function(){
+						$.messager.confirm('警告', '确定要接收设备吗?', function(r){
+							if (r){
+								$("#dlgvoucher").dialog({
+								  width:700,
+								  height:300,
+								  modal:true,
+								  title : ' ' , 
+								  content : "<img src='image/nw180pic/storevoucher.png'></img>"
+								});
+								// exit action;
+							}
+						});
+					}
+				);
+			}
+		);
+	</script>
+    
+	<table id = 'gridRecive'></table>
+    <div id="tbRecive">
+		<div style="padding: 5px 0px 5px 5px">
+            <label>项目名称:</label>
+            <select class="easyui-combobox" style = "width:100px">
+                <option value="0">全部</option>
+                <option value="1">项目1</option>
+                <option value="2">项目2</option>
+            </select>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a>
+            <a id = "tlbRecive" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">设备接收</a>
+            
+        </div>
+	</div>
+    <div id="dlgReciveMain"></div>
+</body>
+</html>

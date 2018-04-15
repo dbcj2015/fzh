@@ -1,0 +1,91 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#productEditform table td{
+		padding : 3px;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("#stype").combobox({
+			url:"/icbc/equip/type",
+			valueField : "tid" ,
+			textField :"typename",
+			value : -1 //代表默认选中value=-1的选项
+		});
+	});
+	
+	$(function(){
+		$("#tbrand").combobox({
+			url:"/icbc/equip/brand",
+			valueField : "bid" ,
+			textField :"brandname",
+			value : -1 //代表默认选中value=-1的选项
+		});
+	});
+$(function(){
+	
+	$("#btnproductSave").click(function(){
+		$("#productEditform").form("submit" , {
+			url : "/icbc/equip/add",
+			success : function(text){
+				console.info(text);
+				var json = $.parseJSON(text);//将服务器返回的字符串转为JSON对象
+				console.info(json);
+				if(json.result == true){
+					$.messager.alert("通知" , json.message ,"warning", function(){
+						$("#dlgEmp").dialog("close");//关闭对话框
+						
+						$("#gridEmp").datagrid("reload");
+					}) //EASYUI为我们提供的alert（）警告框的替代者
+				}else{
+					$.messager.alert("错误" , json.message ,"error");
+				}
+			}
+		});
+	});
+});
+</script>
+<form id="productEditform" method="post" style="margin:5px">
+    <table>
+    	<tr>
+            <td style="width:75px">
+                <label>设备类型：</label>
+            </td>
+            <td style="width:150px">
+               <select id="stype" class="easyui-combox"  name="a" style = "width:150px">
+             
+               </select>
+            </td>
+    	</tr>    
+        <tr>
+            <td style="width:75px">
+                <label>设备品牌：</label>
+            </td>
+            <td style="width:150px">
+               <select id="tbrand" class="easyui-combox"  name="a" style = "width:150px">
+               		
+               </select>
+            </td>
+    	</tr>      
+        <tr>
+            <td style="width:75px">
+                <label>设备型号：</label>
+            </td>
+            <td style="width:150px">
+               <input class="easyui-validatebox" style="width:150px"/>
+            </td>
+    	</tr>                 
+    </table>
+    
+    <div style = "margin:10px 0px 0px 70px">
+    	<a id="btnproductSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a id="btnproductCancel" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>    
+</form>
+</body>
+</html>

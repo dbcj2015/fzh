@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd        
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        <bean id="bid" class="com.bjsxt.dao.BasicInfoDAO">
+        	<property name="tp" ref="transaction"></property>
+        </bean>
+        <bean id="jid" class="com.bjsxt.dao.JobInfoDAO">
+        	<property name="tp" ref="transaction"></property>
+        </bean>
+		<bean id="cs" class="com.bjsxt.service.CsService">
+			<property name="bidao" ref="bid"></property>
+			<property name="jifao" ref="jid"></property>
+		</bean>
+        <bean id="transaction" class="com.bjsxt.plugin.TransactionPlugin"></bean>
+        <!-- 配置(切面)插件，让插件生效 -->
+        <aop:config>
+        	<aop:aspect ref="transaction">
+        		<aop:pointcut expression="execution(* com.bjsxt.service..*Service.*(..)) and !execution(* com.bjsxt.service..*Service.set*(..)) and !execution(* com.bjsxt.service..*Service.get*(..))" id="pt"/>
+        		<aop:around method="doAround" pointcut-ref="pt"/>
+        	</aop:aspect>
+        </aop:config>
+</beans>
+
+
+
+
+
+
+
+
+
+

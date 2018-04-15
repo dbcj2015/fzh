@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.FaultDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Fault">
+		INSERT INTO t_fault (asset_id,fault_description,fault_time,vender_id,maintenance_time,maintenance_detail,cost,fault_state,operator,operator_date)
+		VALUES (#{assetId},#{faultDescription},#{faultTime},#{venderId},#{maintenanceTime},#{maintenanceDetail},#{cost},#{faultState},#{operator},#{operatorDate})
+		<selectKey keyProperty="faultId" keyColumn="fault_id" resultType="Integer" order="AFTER">  
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Fault">
+		UPDATE t_fault
+			SET  
+				fault_id = #{faultId}
+				,asset_id = #{assetId}
+				,fault_description = #{faultDescription}
+				,fault_time = #{faultTime}
+				,vender_id = #{venderId}
+				,maintenance_time = #{maintenanceTime}
+				,maintenance_detail = #{maintenanceDetail}
+				,cost = #{cost}
+				,fault_state = #{faultState}
+				,operator = #{operator}
+				,operator_date = #{operatorDate}
+			WHERE fault_id = #{faultId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_fault where fault_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Fault">
+		select
+				t.fault_id faultId ,
+				t.asset_id assetId ,
+				t.fault_description faultDescription ,
+				t.fault_time faultTime ,
+				t.vender_id venderId ,
+				t.maintenance_time maintenanceTime ,
+				t.maintenance_detail maintenanceDetail ,
+				t.cost cost ,
+				t.fault_state faultState ,
+				t.operator operator ,
+				t.operator_date operatorDate 
+		from t_fault t where t.fault_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select t.* , a.* , s.state_text fault_state_text from t_fault t , v_asset a , t_state s where 1=1
+		and t.asset_id = a.asset_id  and t.fault_state = s.state_id  
+		<if test="faultId != null">
+		and t.fault_id =#{faultId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="faultDescription != null">
+		and t.fault_description =#{faultDescription}
+		</if>
+		<if test="faultTime != null">
+		and t.fault_time =#{faultTime}
+		</if>
+		<if test="venderId != null">
+		and t.vender_id =#{venderId}
+		</if>
+		<if test="maintenanceTime != null">
+		and t.maintenance_time =#{maintenanceTime}
+		</if>
+		<if test="maintenanceDetail != null">
+		and t.maintenance_detail =#{maintenanceDetail}
+		</if>
+		<if test="cost != null">
+		and t.cost =#{cost}
+		</if>
+		<if test="faultState != null">
+		and t.fault_state =#{faultState}
+		</if>
+		<if test="operator != null">
+		and t.operator =#{operator}
+		</if>
+		<if test="operatorDate != null">
+		and t.operator_date =#{operatorDate}
+		</if>
+		
+		<if test="branchId != null">
+		and a.branch_id =#{branchId}
+		</if>
+		
+		<if test="orderby != null">
+		 order by #{orderby}
+		</if>
+		
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_fault t where 1=1 
+		<if test="faultId != null">
+		and t.fault_id =#{faultId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="faultDescription != null">
+		and t.fault_description =#{faultDescription}
+		</if>
+		<if test="faultTime != null">
+		and t.fault_time =#{faultTime}
+		</if>
+		<if test="venderId != null">
+		and t.vender_id =#{venderId}
+		</if>
+		<if test="maintenanceTime != null">
+		and t.maintenance_time =#{maintenanceTime}
+		</if>
+		<if test="maintenanceDetail != null">
+		and t.maintenance_detail =#{maintenanceDetail}
+		</if>
+		<if test="cost != null">
+		and t.cost =#{cost}
+		</if>
+		<if test="branchId != null">
+		and a.branch_id =#{branchId}
+		</if>
+		
+		<if test="faultState != null">
+		and t.fault_state =#{faultState}
+		</if>
+		<if test="operator != null">
+		and t.operator =#{operator}
+		</if>
+		<if test="operatorDate != null">
+		and t.operator_date =#{operatorDate}
+		</if>
+	</select>
+
+</mapper>

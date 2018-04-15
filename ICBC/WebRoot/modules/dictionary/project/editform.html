@@ -1,0 +1,46 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#projectEditform table td{
+		padding : 3px;
+	}
+</style>
+
+<form id="projectEditform" method="post" style="margin:5px">
+    <table>
+    	<tr>
+            <td style="width:75px">
+                <label>项目名称：</label>
+            </td>
+            <td style="width:150px">
+               <input class="easyui-validatebox" type="text" name="a" style = "width:150px" value="2014年全省ATM设备采购项目"/>
+            </td>
+         </tr>
+         
+         
+         <tr>   
+         	<td style="width:75px">
+                <label>年度：</label>
+            </td>
+            <td style="width:150px">
+               <select class="easyui-combox"  name="a" style = "width:150px">
+               		<option>2012</option>
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+               </select>
+            </td>
+    	</tr>                         
+    </table>
+    
+    <div style = "margin:10px 0px 0px 70px">
+    	<a id="btnprojectSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a id="btnprojectCancel" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>    
+</form>
+</body>
+</html>

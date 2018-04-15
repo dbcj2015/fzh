@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>找资源，用云搜</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="resources/artTemplate/template-web.js"></script>
+	
+	<script type="text/html" id="resultTpl">
+		<div class="row" style="padding:10px 10px 0px 20px">
+			<h4><a href="{url}" target="_blank">{title}_{category}</a></h4>
+			<div style="color:darkgreen">{url}</div>
+			<div ><span>文件大小:{size} </span><span style="padding-left:20px">文件类型：{file_type}</span></div>
+		</div>	
+	</script>
+	<script type="text/javascript">
+		function showResult(q , p){
+			$.post({
+				url : "search" ,
+				data : {"q" : q , "page" : p} ,
+				success : function(text){
+					var j = $.parseJSON(text);
+					var page = j.showapi_res_body.pagebean;
+					console.info(page);
+					$("#resultContainer").show();
+					$("#key").text(q);
+					$("#total").text(page.allNum);
+					$("#hidPageNo").val(page.currentPage);
+					var st = (page.currentPage - 1) * 10 + 1;
+					var ed = page.currentPage * 10;
+					$("#spnPageNo").text(st + "-" + ed);
+					$("#txtPageNo").val("第" + page.currentPage + "页");
+					$("#hidKey").val(q);
+					var data = page.contentlist;
+					var tpl = $("#resultTpl").html();
+					$("#result").html("");
+					for(var i = 0 ; i < data.length ; i++){
+						var rec= tpl.replace("{title}" , data[i].title)
+							.replace("{category}" , data[i].category)
+							.replace(/{url}/g , data[i].url)
+							.replace("{size}" , $.trim(data[i].size))
+							.replace("{file_type}" , $.trim(data[i].file_type));
+						$("#result").append(rec);
+					};						
+					location.href="#top";
+				}
+			});			
+		};
+		
+		$(function(){
+			$("#btnSearch").click(function(){
+				var q = $("#txtKey").val();
+				console.info(q);
+				if($.trim(q) == ""){
+					return;
+				};
+				showResult(q , 1);
+			});
+			
+			$("#txtKey").keypress(function(e){
+				if(e.charCode == 13){
+					$("#btnSearch").click();
+				}
+			})
+		});
+		$(function(){
+			$("#btnPre,#btnNext").click(function(){
+				
+				var step = $(this).attr("step");
+				var curpage = $("#hidPageNo").val();
+				
+				var p = -1;
+				if(parseInt(curpage) + parseInt(step) > 1){
+					p = parseInt(curpage) + parseInt(step);
+				}else{
+					p = 1;
+				}
+				
+				showResult($("#hidKey").val() , p);
+				
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<a name="top"></a>
+		<div class="row">
+	  		<div style="margin-top: 50px" class="col-lg-2 col-lg-offset-4">
+	  			<img alt="" src="resources/logo/logo.png" style="width:300px">
+	  		</div>
+	  	</div>
+	  	<div class="row">
+	  		<div style="margin-top: 10px" class="col-lg-8 col-lg-offset-2">
+	  			<div class="input-group input-group-lg">
+	  				<span class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+					<input id="txtKey" type="text" class="form-control" placeholder="找资源，用云搜">
+						<span class="input-group-btn">
+							<input id="btnSearch" class="btn btn-default" type="button" style="background-color: lightblue" value="云搜一下"></input>
+						</span>
+					
+			    </div>
+			</div>
+		</div>
+		<div class="row" id="resultContainer" style="display:none">
+			<div style="margin-top: 30px" class="col-lg-8 col-lg-offset-2" >
+				  <!-- Nav tabs -->
+				  <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">查询结果</a></li>
+				  </ul>
+				  
+				  <!-- Tab panes -->
+				  <div class="tab-content">
+				    <div  role="tabpanel" class="tab-pane active" id="home">
+				    	<div id="pageinfo"  class="alert alert-success" role="alert">
+				    		主淫，已为您找到<span id="total" style="font-weight: bold;"></span>条关于“<span style="font-weight:bold" id="key"></span>”的资源
+				    		,当前是第<span id="spnPageNo" style="font-weight:bold"></span>条，您还满意吗？
+				    	</div>
+						<div id="result" style="overflow-y:auto;overflow-x:hidden"></div>
+						<div id="pagination" class="col-lg-4 col-lg-offset-4">
+							<input type="hidden" id="hidKey" value=""/>
+							<input type="hidden" id="hidPageNo" value="3"/>
+							<div class="input-group">
+				  				<span class="input-group-btn">
+									<button id="btnPre" class="btn btn-default" step="-1" style="background-color: lightblue" >
+										<span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									</button>
+								</span>
+								<input id="txtPageNo" readonly="readonly"  type="text" class="form-control"  value="1" style="text-align: center;font-size:14px">
+								<span class="input-group-btn">
+									<button id="btnNext" class="btn btn-default" step="1" style="background-color: lightblue" >
+										<span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									</button>
+								</span>
+						    </div>						
+						</div>
+				    </div>
+				</div>
+			</div>		
+		</div>
+		<div class="row" style="height:100px">
+	  		
+		</div>
+	</div>
+</body>
+</html>

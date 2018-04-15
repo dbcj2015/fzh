@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.EmpDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Emp">
+		INSERT INTO t_employee (emp_code,name,branch_id)
+		VALUES (#{empCode},#{name},#{branchId})
+		<selectKey keyProperty="empId" keyColumn="emp_id" resultType="Integer" order="AFTER">  
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Emp">
+		UPDATE t_employee
+			SET  
+				emp_id = #{empId}
+				,emp_code = #{empCode}
+				,name = #{name}
+				,branch_id = #{branchId}
+			WHERE emp_id = #{empId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_employee where emp_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Emp">
+		select
+				t.emp_id empId ,
+				t.emp_code empCode ,
+				t.name name ,
+				t.branch_id branchId 
+		from t_employee t where t.emp_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.emp_id empId ,
+				t.emp_code empCode ,
+				t.name name ,
+				t.branch_id branchId 
+		 from t_employee t where 1=1 
+		<if test="empId != null">
+		and t.emp_id =#{empId}
+		</if>
+		<if test="empCode != null">
+		and t.emp_code =#{empCode}
+		</if>
+		<if test="name != null">
+		and t.name =#{name}
+		</if>
+		<if test="branchId != null">
+		and t.branch_id =#{branchId}
+		</if>
+		<if test="vagueText != null">
+		and t.name like #{vagueText} 
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_employee t where 1=1 
+		<if test="empId != null">
+		and t.emp_id =#{empId}
+		</if>
+		<if test="empCode != null">
+		and t.emp_code =#{empCode}
+		</if>
+		<if test="name != null">
+		and t.name =#{name}
+		</if>
+		<if test="branchId != null">
+		and t.branch_id =#{branchId}
+		</if>
+	</select>
+
+</mapper>

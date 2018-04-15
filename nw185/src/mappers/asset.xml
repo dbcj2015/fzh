@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.AssetDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Asset">
+		INSERT INTO t_asset (branch_id,product_id,price,guaratee_term,check_seq,state,emp_id,create_time,create_emp)
+		VALUES (#{branchId},#{productId},#{price},#{guarateeTerm},#{checkSeq},#{state},#{empId},#{createTime},#{createEmp})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Asset">
+		UPDATE t_asset
+			SET  
+				asset_id = #{assetId}
+				,branch_id = #{branchId}
+				,product_id = #{productId}
+				,price = #{price}
+				,guaratee_term = #{guarateeTerm}
+				,check_seq = #{checkSeq}
+				,state = #{state}
+				,emp_id = #{empId}
+				,create_time = #{createTime}
+				,create_emp = #{createEmp}
+			WHERE asset_id = #{assetId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_asset where asset_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Asset">
+		select
+				t.asset_id assetId ,
+				t.branch_id branchId ,
+				t.product_id productId ,
+				t.price price ,
+				t.guaratee_term guarateeTerm ,
+				t.check_seq checkSeq ,
+				t.state state ,
+				t.emp_id empId ,
+				t.create_time createTime ,
+				t.create_emp createEmp 
+		from t_asset t where t.asset_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.asset_id assetId ,
+				t.branch_id branchId ,
+				t.product_id productId ,
+				t.price price ,
+				t.guaratee_term guarateeTerm ,
+				t.check_seq checkSeq ,
+				t.state state ,
+				t.emp_id empId ,
+				t.create_time createTime ,
+				t.create_emp createEmp 
+		 from t_asset t where 1=1 
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="branchId != null">
+		and t.branch_id =#{branchId}
+		</if>
+		<if test="productId != null">
+		and t.product_id =#{productId}
+		</if>
+		<if test="price != null">
+		and t.price =#{price}
+		</if>
+		<if test="guarateeTerm != null">
+		and t.guaratee_term =#{guarateeTerm}
+		</if>
+		<if test="checkSeq != null">
+		and t.check_seq =#{checkSeq}
+		</if>
+		<if test="state != null">
+		and t.state =#{state}
+		</if>
+		<if test="empId != null">
+		and t.emp_id =#{empId}
+		</if>
+		<if test="createTime != null">
+		and t.create_time =#{createTime}
+		</if>
+		<if test="createEmp != null">
+		and t.create_emp =#{createEmp}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_asset t where 1=1 
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="branchId != null">
+		and t.branch_id =#{branchId}
+		</if>
+		<if test="productId != null">
+		and t.product_id =#{productId}
+		</if>
+		<if test="price != null">
+		and t.price =#{price}
+		</if>
+		<if test="guarateeTerm != null">
+		and t.guaratee_term =#{guarateeTerm}
+		</if>
+		<if test="checkSeq != null">
+		and t.check_seq =#{checkSeq}
+		</if>
+		<if test="state != null">
+		and t.state =#{state}
+		</if>
+		<if test="empId != null">
+		and t.emp_id =#{empId}
+		</if>
+		<if test="createTime != null">
+		and t.create_time =#{createTime}
+		</if>
+		<if test="createEmp != null">
+		and t.create_emp =#{createEmp}
+		</if>
+	</select>
+	<select id="groupStoreAsset" resultType="java.util.LinkedHashMap">
+		SELECT goodstype_id , goodstype_name , brand_id , brand_name , product_id , product_name,COUNT(*) cnt FROM (
+			SELECT a.* , p.product_name , b.brand_id, b.brand_name ,g.goodstype_id, g.goodstype_name FROM 
+				t_asset a , t_product p , t_brand b , t_goodstype g 
+			WHERE
+				a.product_id = p.product_id  AND p.goodstype_id = g.goodstype_id AND p.brand_id = b.brand_id
+		) s WHERE s.branch_id = 1 AND state = 2 GROUP BY s.goodstype_id , s.goodstype_name , s.brand_id , s.brand_name , s.product_id , s.product_name	
+	</select>
+</mapper>

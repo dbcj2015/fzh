@@ -1,0 +1,58 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridGoodstype").datagrid({
+					url:"modules/dictionary/goodstype/goodstype.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'设备类型',width:500 ,align:'center'}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbGoodstype' ,
+					pagination : true//分页栏
+				});
+				$("#tlbGoodstypeNew , #tlbGoodstypeEdit").click(function(){
+						$("#dlgGoodstypeMain").dialog({
+						  width:330,
+						  height:150,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/dictionary/goodstype/editform.html'
+						});
+					}
+				);
+								
+				$("#tlbGoodstypeDelete").click(function(){
+					$.messager.confirm('警告', '确定要删除选中的记录吗?', function(r){
+						if (r){
+							// exit action;
+						}
+					});
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'gridGoodstype'></table>
+    <div id="tbGoodstype">
+
+		<div style="padding: 5px 0px 5px 5px">
+            <a id = "tlbGoodstypeNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新建</a>
+			<a id = "tlbGoodstypeEdit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a id = "tlbGoodstypeDelete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        </div>
+	</div>
+    <div id="dlgGoodstypeMain"></div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+   	<dubbo:application name="bjsxt-news"/><!-- 定义在注册中心的服务名称 -->
+   	<!-- 注册中心的虚拟地址,因为采用了multicast的含义是"多播",是指在单机或者局域网使用的一种注册中心方式
+   		multicast://224.1.2.3:4567 则是广播的虚拟地址,但要求必须VIP为224开头的
+   	 -->
+   	<dubbo:registry address="multicast://224.1.2.3:4567"></dubbo:registry>
+   	<dubbo:protocol name="dubbo" port="20880"/><!-- dubbo对外暴露接口所采用的地址,name一般不用变就是默认的dubbo就行了 -->
+   	<!-- 定义服务的实现类 -->
+   	<bean id="newsServiceImpl" class="com.bjsxt.serviceimp.NewsServiceImp"/>
+   	<!-- 暴露接口, interface对应接口,ref引用实现类 -->
+   	<dubbo:service interface = "com.bjsxt.service.NewsService" ref="newsServiceImpl"/>
+</beans>

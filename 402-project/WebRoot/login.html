@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>login.html</title>
+    <meta charset="utf-8"/>
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+  </head>
+  
+  <body>
+  	<h3>欢迎登录401峡谷</h3>
+  	<h4>一定是在WebRoot目录下创建</h4>
+  	<h5>http://localhost:8080/summary/login.html</h5>
+  	<h3>提交的时候需要提交给服务器,login.html文件是在402项目下，所以服务器会根据暗号执行对应servlet对象，action选项就是对应的暗号</h3>
+  	<hr />
+   	<form action="login" method="post">
+   		用户名:<input type="text" name="uname" value=""/><br/>
+   		密码:<input type="password" name="pwd" value=""/><br/>
+   		<input type="submit"  value="登录"/>
+   	</form>
+  </body>
+</html>
+
+

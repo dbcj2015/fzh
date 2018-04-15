@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:mvc="http://www.springframework.org/schema/mvc" 
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans.xsd
+	        http://www.springframework.org/schema/context
+	        http://www.springframework.org/schema/context/spring-context.xsd
+	        http://www.springframework.org/schema/aop
+	        http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd        
+	        http://www.springframework.org/schema/tx
+	        http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 利用注解的方式自动扫描各种Bean -->        
+	<context:component-scan base-package="com.bjsxt"></context:component-scan>
+	<!-- 利用Spring与Mybatis整合,原有的mybatis.xml消失不见了 -->
+	<!-- 1. 配置数据源,采用DBCP2来创建数据库连接 -->
+	<bean id="ds" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/sqloptimize?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+	<!-- 2. 让Spring来负责创建SqlSessionFactory 
+		SqlSessionFactoryBean就是在IOC容器初始化的时候自动由Spring来负责创建SessionFactory
+		并且对SessionFactory进行管理,其作用就相当于MyBatisUtils<
+	-->	
+	<bean id="sf" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据源使用ds对象所选用的数据库 -->
+		<property name="dataSource" ref="ds"></property>
+		<!-- 自动加载mappers目录下的SQL xml文件 -->
+		<property name="mapperLocations" value="classpath:mappers/*.xml"></property>
+	</bean>
+	
+	<!-- 3.在IOC容器加载的时候自动扫描DAO接口,我们不再需要写<Mappers>这些配置文件了 -->	
+	<bean id="msc" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.bjsxt" ></property>
+	</bean>
+	
+	<!-- 增加声明式事务控制 -->
+	<!-- 1.定义事务管理器,事务管理器用于执行打开\提交\回滚事务的操作 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds"></property><!-- 绑定数据源 -->
+	</bean>
+	<!-- 2. 通知Spring,程序将采用注解的形式来管理事务 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+	
+	<!-- 以上部分是 MyBatis + Spring的整合代码-->
+	<!-- 以下是SpringMVC的配置 -->
+	<!-- id和name都可以是指引用bean的名称,id在全局不和重复,而name可以重复,BUT不推荐这么用. ctx.getBeans("aaaa")
+		从表现形式上来说,id如果出现重复,则Spring马上会报错,name出现重复,则不会.在工作中,基本都是要求bean的名称是唯一的.所以使用id更为合适
+		 -->
+	<bean name="wic" class="com.bjsxt.nw185.base.WebInitConverter"></bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer" ref="wic"></property>
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/html;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>	
+	
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:default-servlet-handler/>
+	<!-- 
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	 -->
+	 <!-- 增加对文件上传的支持 -->
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+</beans>

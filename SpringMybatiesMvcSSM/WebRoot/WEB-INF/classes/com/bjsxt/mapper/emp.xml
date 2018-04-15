@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.bjsxt.dao.EmpDao">
+  	<select id="findPage" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+  		select e.*,d.* from t_employee e,t_department d where e.dept_id=d.dept_id limit #{st},#{r}
+  	</select>
+  	<select id="countAll" resultType="Integer">
+  		select count(*) from t_employee
+  	</select>
+  	<insert id="insertAll" parameterType="com.bjsxt.entity.Emp">
+  	<!-- 批量插入数据 -->
+  		insert into t_employee (
+			  dept_id,
+			  name,
+			  mobile,
+			  job,
+			  email
+			)
+			VALUES
+			  (
+			    #{deptId},
+			    #{name},
+			    #{mobile},
+			    #{job},
+			    #{email}
+			  )
+  	</insert>
+  	
+  </mapper>

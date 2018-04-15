@@ -1,0 +1,51 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-HDJY/C20160314/20160705/trainning/hdjy" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mybatis/" , 
+	"basePackage" : "com.bjsxt.hdjy",
+	"model" : {
+		"mapperName":"function.xml",
+		"package" : "entity",
+		"class" : "Function" , 
+		"tableName" : "t_function",
+		"id" : {"name" :"functionId" , "column":"function_id" , "type" : "Integer"} ,
+		"properties" : [
+		    {"name" : "moduleId" ,  "column" :"module_id" , "type" : "Integer"},
+		    {"name" : "functionName" ,  "column" :"function_name" , "type" : "String"},
+			{"name" : "url" ,  "column" :"url" , "type" : "String"}
+		]
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "FunctionDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "FunctionService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "FunctionController",
+		"namespace" : "/function"
+	},
+	"view" : {
+		"context" : "/hdjy",
+		"page" : "/function.jsp" ,
+		"datagrid" : {
+			"sql" : "select * from t_function",
+			"keyfield":"function_id" ,
+			"columns" : [
+				{"title" : "模块名称" , "field" : "module_id" , "width" : "20%"},
+				{"title" : "功能名称" , "field" : "function_name" , "width" : "20%"},
+				{"title" : "链接地址" , "field" : "url" , "width" : "30%" }
+			]
+		},
+		"form" : [
+			{"title" : "模块名称" , "property" : "moduleId" , "type":"combobox" , "required":true },
+			{"title" : "功能名称" , "property" : "functionName" , "type" : "text" , "required" : true ,"min" : 0 , "max" : 1000000 , "precision" : 0},
+			{"title" : "链接地址" , "property" : "url" ,  "type" : "text" ,"required" : true}
+		]
+	} 
+}

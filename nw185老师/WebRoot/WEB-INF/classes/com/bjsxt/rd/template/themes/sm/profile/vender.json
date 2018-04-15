@@ -1,0 +1,51 @@
+{
+	
+	"baseDir": "D:/WS-PROJECTS/实训项目-NW185工商银行资产管理系统/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"vender.xml",
+		"package" : "entity",
+		"class" : "Vender" , 
+		"tableName" : "t_vender",
+		"id" : {"name" :"venderId" , "column":"vender_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "VenderDAO",
+		"beanId" : "venderDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "VenderService",
+		"beanId" : "venderService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "VenderController",
+		"beanId" : "venderController",
+		"namespace" : "/vender"
+	},
+	"view" : {
+		"title" : "供货商管理",
+		"page" : "/dictionary/vender.jsp" ,
+		"datagrid" : {
+			"keyfield":"venderId" ,
+			"columns" : [
+				{"title" : "编号" , "field" : "venderId" , "width" : "10%"},
+				{"title" : "供应商" , "field" : "venderName" , "width" : "20%"}
+			]
+		},
+		"form" : [
+			{"title" : "供应商" , "property" : "venderName" ,  "type" : "text" ,"required" : true}
+		]
+	} 
+}

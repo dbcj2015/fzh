@@ -1,0 +1,58 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridvender").datagrid({
+					url:"modules/dictionary/vender/vender.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'供应商',width:500 ,align:'center'}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbvender' ,
+					pagination : true//分页栏
+				});
+				$("#tlbvenderNew , #tlbvenderEdit").click(function(){
+						$("#dlgvenderMain").dialog({
+						  width:330,
+						  height:150,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/dictionary/vender/editform.html'
+						});
+					}
+				);
+								
+				$("#tlbvenderDelete").click(function(){
+					$.messager.confirm('警告', '确定要删除选中的记录吗?', function(r){
+						if (r){
+							// exit action;
+						}
+					});
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'gridvender'></table>
+    <div id="tbvender">
+
+		<div style="padding: 5px 0px 5px 5px">
+            <a id = "tlbvenderNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新建</a>
+			<a id = "tlbvenderEdit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a id = "tlbvenderDelete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        </div>
+	</div>
+    <div id="dlgvenderMain"></div>
+</body>
+</html>

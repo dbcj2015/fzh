@@ -1,0 +1,85 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#storeEditform table td{
+		padding : 3px;
+	}
+</style>
+
+<form id="recoverEditform" method="post" style="margin:5px">
+    <table>
+        <tr>
+            <td style="width:75px">
+                <label>设备概要</label>
+            </td>
+            <td style="width:200px">
+                JQM1899817 打印机 HP DL500 
+            </td>
+        </tr> 
+        
+        <tr>
+            <td>
+                <label>故障时间</label>
+            </td>
+            <td>
+                2014-05-15
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>故障现象</label>
+            </td>
+            <td>
+                打印无响应
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <label>维修公司</label>
+            </td>
+            <td>
+                <select class="easyui-combobox" style="width:150px">
+                	<option>自修</option>
+                    <option>朗弘软件</option>
+                    <option>易方达科技有限公司</option>
+                </select>
+            </td>
+        </tr>        
+                
+        <tr>
+            <td>
+                <label>维修时间</label>
+            </td>
+            <td>
+				<input class="easyui-datebox" style="width:150px" />
+            </td>
+        </tr> 
+        
+        <tr>
+            <td>
+                <label>维修内容</label>
+            </td>
+            <td>
+                <textarea style="width:150px" />
+            </td>
+        </tr>
+        <tr>
+        	<td><label>维修费用</label></td>
+            <td><input class="easyui-numberbox" style="width:150px"/></td>
+        </tr>
+    </table>
+    
+    <div style = "margin:10px 0px 0px 70px">
+    	<a id = "btnRecoverSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>    
+</form>
+<div id="dlgRecoverEditMain"></div>
+</body>
+</html>

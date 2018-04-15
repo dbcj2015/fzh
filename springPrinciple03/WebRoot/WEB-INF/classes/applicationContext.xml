@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation=
+"http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        <!-- 通过反射机制创建对象时,IOC容器中默认的key值为对应类名首字母小写 -->
+       <bean id="empDAO" class="com.bjsxt.smpSpring.EmpDAO" />
+       <bean id="empJdbcDAO" class="com.bjsxt.smpSpring.EmpJdbcDAO"></bean>
+       <bean id="empService" class="com.bjsxt.smpSpring.EmpService">
+       		<!-- property代表为属性赋值 , name代表属性名-->
+       		<!-- 利用setDao方法对将制定ID的对象赋值给dao属性 -->
+       		<!-- 给类EmpService中的属性IEmpDAO赋值,也就是创建IEmpDAO对象,是通过对应属性的set()方法进行 -->
+       		<!-- 以下这种方式是对属性赋值:
+       			使用范围:由于之前存在对象empJdbcDAO,这种方式可以在保证原始代码(empJdbcDAO类)不变的前提下,实现相同的功能
+       		 -->
+       		<property name="dao" ref="empJdbcDAO"></property>
+       </bean>
+       <!-- id就是IOC容器中存储对象的键值，代表的是对象 -->
+       <bean id="empControllerObj" class="com.bjsxt.smpSpring.EmpController">
+       		<property name="eservice" ref="empServiceNT"></property><!-- refrence -->
+       </bean>
+       <!-- 
+       		EmpServiceNonTranction类继承了类empService,所以在创建子类的时候，父类对象也会创建
+       
+        -->
+       <bean id="empServiceNT" class="com.bjsxt.smpSpring.EmpServiceNonTranction">
+       		<property name="dao" ref="empDAO"></property>
+       </bean>
+       <!-- 构造方法注入 -->
+       <bean id="testController" class="com.bjsxt.smpSpring.TestController">
+       <!-- ref:引用地址 -->
+       		<constructor-arg name="emp" ref="empDAO"></constructor-arg>
+       		<property name="driver" value="com.mysql.jdbc.Driver"></property>
+       		<property name="url" value="地址"></property>
+       		<property name="UserName" value="root"></property>
+       		<property name="password" value="root"></property>
+       </bean>
+       
+</beans>

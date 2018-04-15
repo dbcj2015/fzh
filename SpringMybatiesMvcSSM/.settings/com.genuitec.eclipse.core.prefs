@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=WebRoot/themes,WebRoot/script,WebRoot/WEB-INF/script/smp.validation.js,WebRoot/WEB-INF/themes/insdep/jquery.insdep-extend.min.js,WebRoot/WEB-INF/script/easyui-lang-zh_CN.js,WebRoot/WEB-INF/script/jquery.min.js,WebRoot/WEB-INF/themes/insdep/expand
+validator.Unchecked=

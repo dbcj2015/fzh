@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.TakeoutDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Takeout">
+		INSERT INTO t_takeout (asset_id,user_id,purpose,takeback_time,operator,operator_time ,sn , takeout_time)
+		VALUES (#{assetId},#{userId},#{purpose},#{takebackTime},#{operator},#{operatorTime} , #{sn},#{takeoutTime})
+		<selectKey keyProperty="takeoutId" keyColumn="takeout_id" resultType="Integer" order="AFTER">  
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Takeout">
+		UPDATE t_takeout
+			SET  
+				takeout_id = #{takeoutId}
+				,asset_id = #{assetId}
+				,user_id = #{userId}
+				,purpose = #{purpose}
+				,takeout_time = #{takeoutTime}
+				,takeback_time = #{takebackTime}
+				,operator = #{operator}
+				,operator_time = #{operatorTime}
+				,sn=#{sn}
+			WHERE takeout_id = #{takeoutId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_takeout where takeout_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Takeout">
+		select
+				t.takeout_id takeoutId ,
+				t.asset_id assetId ,
+				t.user_id userId ,
+				t.purpose purpose ,
+				t.takeout_time  takeoutTime,
+				t.takeback_time takebackTime ,
+				t.operator operator ,
+				t.operator_time operatorTime ,
+				t.sn sn
+		from t_takeout t where t.takeout_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.takeout_id takeoutId ,
+				t.asset_id assetId ,
+				t.user_id userId ,
+				t.purpose purpose ,
+				t.takeout_time takeoutTime ,
+				t.takeback_time takebackTime ,
+				t.operator operator ,
+				t.operator_time operatorTime ,
+				t.sn sn
+		 from t_takeout t where 1=1 
+		<if test="takeoutId != null">
+		and t.takeout_id =#{takeoutId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="userId != null">
+		and t.user_id =#{userId}
+		</if>
+		<if test="purpose != null">
+		and t.purpose =#{purpose}
+		</if>
+		<if test="takeoutTime != null">
+		and t.takeout_time =#{takeoutTime}
+		</if>
+		<if test="takebackTime != null">
+		and t.takeback_time =#{takebackTime}
+		</if>
+		<if test="operator != null">
+		and t.operator =#{operator}
+		</if>
+		<if test="operatorTime != null">
+		and t.operator_time =#{operatorTime}
+		</if>
+		<if test="sn != null">
+		and t.sn =#{sn}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_takeout t where 1=1 
+		<if test="takeoutId != null">
+		and t.takeout_id =#{takeoutId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="userId != null">
+		and t.user_id =#{userId}
+		</if>
+		<if test="purpose != null">
+		and t.purpose =#{purpose}
+		</if>
+		<if test="takeoutTime != null">
+		and t.takeout_time =#{takeoutTime}
+		</if>
+		<if test="takebackTime != null">
+		and t.takeback_time =#{takebackTime}
+		</if>
+		<if test="operator != null">
+		and t.operator =#{operator}
+		</if>
+		<if test="operatorTime != null">
+		and t.operator_time =#{operatorTime}
+		</if>
+		<if test="sn != null">
+		and t.sn =#{sn}
+		</if>
+	</select>
+
+</mapper>

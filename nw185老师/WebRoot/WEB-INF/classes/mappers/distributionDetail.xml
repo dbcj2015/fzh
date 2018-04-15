@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.DistributionDetailDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.DistributionDetail">
+		INSERT INTO t_distribution_detail (asset_id,dist_id)
+		VALUES (#{assetId},#{distId})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.DistributionDetail">
+		UPDATE t_distribution_detail
+			SET  
+				dd_id = #{ddId}
+				,asset_id = #{assetId}
+				,dist_id = #{distId}
+			WHERE dd_id = #{ddId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_distribution_detail where dd_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.DistributionDetail">
+		select
+				t.dd_id ddId ,
+				t.asset_id assetId ,
+				t.dist_id distId 
+		from t_distribution_detail t where t.dd_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.dd_id ddId ,
+				t.asset_id assetId ,
+				t.dist_id distId 
+		 from t_distribution_detail t where 1=1 
+		<if test="ddId != null">
+		and t.dd_id =#{ddId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="distId != null">
+		and t.dist_id =#{distId}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_distribution_detail t where 1=1 
+		<if test="ddId != null">
+		and t.dd_id =#{ddId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="distId != null">
+		and t.dist_id =#{distId}
+		</if>
+	</select>
+
+	<sql id=""></sql>
+	<select id="groupDetailByDistId" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		SELECT dist_id , goodstype_id , goodstype_name , brand_id , brand_name ,product_id , product_name , COUNT(*) num FROM (
+			SELECT a.* , dd.dd_id , dd.dist_id ,g.goodstype_id,g.goodstype_name ,b.brand_id,b.brand_name ,p.product_name FROM t_distribution_detail dd , t_asset a , t_product p , t_goodstype g , t_brand b 
+			WHERE
+				dd.asset_id = a.asset_id 
+				AND a.product_id = p.product_id 
+				AND p.goodstype_id = g.goodstype_id 
+				AND p.brand_id = b.brand_id
+				AND dist_id = #{distId}
+		) s GROUP BY dist_id , goodstype_id , goodstype_name , brand_id , brand_name ,product_id , product_name
+	</select>
+</mapper>

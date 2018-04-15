@@ -1,0 +1,67 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#accountEditform table td{
+		padding : 3px;
+	}
+</style>
+
+<form id="accountEditform" method="post" style="margin:5px">
+    <table>
+    	<tr>
+            <td style="width:75px">
+                <label>所属机构:</label>
+            </td>
+            <td style="width:150px">
+                <select class="easyui-combobox" style="width:150px">
+                    <option value="0">河北省省行</option>
+                    <option value="1">石家庄分行</option>
+                    <option value="2">保定分行</option>
+                </select>
+            </td>
+    	</tr>
+        <tr>
+            <td>
+                <label>管理员姓名:</label>
+            </td>
+            <td>
+                <input class="easyui-validatebox" type="text" name="a" style = "width:150px"/>
+            </td>
+        </tr>  
+        <tr>
+            <td>
+                <label>管理员账户:</label>
+            </td>
+            <td>
+                <input class="easyui-validatebox" type="text" name="a" style = "width:150px"/>
+            </td>
+        </tr>    
+        <tr>
+            <td>
+                <label>密码:</label>
+            </td>
+            <td>
+               <input  type="password" name="c" style = "width:150px"/>
+            </td>
+        </tr>    
+        <tr>
+            <td>
+                <label>确认密码:</label>
+            </td>
+            <td>
+               <input  type="password" name="c" style = "width:150px"/>
+            </td>
+        </tr>                                         
+    </table>
+    
+    <div style = "margin:10px 0px 0px 70px">
+    	<a id="btnAccountSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a id="btnAccountCancel" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>    
+</form>
+</body>
+</html>

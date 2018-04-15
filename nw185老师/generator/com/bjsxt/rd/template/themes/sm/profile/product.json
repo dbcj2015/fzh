@@ -1,0 +1,54 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"product.xml",
+		"package" : "entity",
+		"class" : "Product" , 
+		"tableName" : "t_product",
+		"id" : {"name" :"productId" , "column":"product_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "ProductDAO",
+		"beanId" : "productDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "ProductService",
+		"beanId" : "productService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "ProductController",
+		"beanId" : "productController",
+		"namespace" : "/product"
+	},
+	"view" : {
+		"page" : "/product.jsp" ,
+		"title" : "设备型号管理" ,
+		"datagrid" : {
+			"keyfield":"productId" ,
+			"columns" : [
+				{"title" : "设备类型" , "field" : "goodstypeName" , "width" : "10%"},
+				{"title" : "设备品牌" , "field" : "brandName" , "width" : "10%"},
+				{"title" : "设备型号" , "field" : "productName" , "width" : "20%"}
+			]
+		},
+		"form" : [
+			{"title" : "设备类型" , "property" : "goodstypeId" ,  "type" : "combobox" ,"required" : true},
+		    {"title" : "设备品牌" , "property" : "brandId" ,  "type" : "combobox" ,"required" : true},
+			{"title" : "设备名称" , "property" : "productName" ,  "type" : "text" ,"required" : true}
+		]
+	} 
+}

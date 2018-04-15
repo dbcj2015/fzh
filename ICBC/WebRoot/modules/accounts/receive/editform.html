@@ -1,0 +1,76 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#storeEditform table td{
+		padding : 3px;
+	}
+</style>
+<script>
+	$(function(){
+		$("#btnDistriSave").click(
+			function(){
+				$("#dlgDistriEditMain").dialog({
+				  width:700,
+				  height:300,
+				  modal:true,
+				  title : ' ' , 
+				  content : "<img src='image/nw180pic/distributionvoucher.png'></img>"
+				});
+			}
+		);
+	})
+</script>
+<form id="distriEditform" method="post" style="margin:5px">
+    <table>
+
+        <tr>
+            <td>
+                <label>下发单名称</label>
+            </td>
+            <td>
+                <input class="easyui-validatebox" type="text" name="a" style = "width:150px"/>
+            </td>
+        </tr>   
+        <tr>
+            <td>
+                <label>接收机构</label>
+            </td>
+            <td>
+                <select class="easyui-combobox" style = "width:150px">
+                	<option value="0">石家庄分行</option>
+                	<option value="1">保定分行</option>
+                	<option value="2">张家口分行</option>
+            	</select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>在库数量</label>
+            </td>
+            <td>
+                打印机 HP DL500  在库6台
+            </td>
+        </tr> 
+        
+        <tr>
+            <td>
+                <label>下发数量</label>
+            </td>
+            <td>
+                <input class="easyui-validatebox" type="text" name="a" style = "width:150px"/>
+            </td>
+        </tr>                                            
+    </table>
+    
+    <div style = "margin:10px 0px 0px 70px">
+    	<a id = "btnDistriSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>    
+</form>
+<div id="dlgDistriEditMain"></div>
+</body>
+</html>

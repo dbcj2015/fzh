@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bjsxt.hibernate.entity.Goods" table="t_goods">
+		<id name="goodsId" column="goods_id">
+			<!-- 主键生成器 -->
+			<generator class="native"></generator>
+		</id>
+
+		<property name="title" column="title"></property>
+		<property name="subTitle" column="sub_title"></property>
+		<property name="originalCost" column="original_cost"></property>
+		<property name="currentPrice" column="current_price"></property>
+		<property name="discount" column="discount"></property>
+		<property name="isFreeDelivery" column="is_free_delivery"></property>
+		<property name="stock" column="stock"></property>
+		<property name="sourceUrl" column="source_url"></property>
+		<property name="categoryId" column="category_id"></property>
+		<property name="hpShow" column="hp_show"></property>
+		<property name="isHot" column="is_hot"></property>
+	</class>
+
+</hibernate-mapping>

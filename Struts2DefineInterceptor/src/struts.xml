@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+      <struts>
+      	<!-- <package name="crudPak" extends="struts-default" namespace="/crud">
+      	定义拦截器
+	      	<interceptors>
+	      		<interceptor name="timeLoger" class="com.bjsxt.interceptor.LogInterceptor"></interceptor>
+	      	</interceptors>
+				<action name="create" class="com.bjsxt.crud.action.CRUDAction" method="create">
+					使用拦截器
+					<interceptor-ref name="timeLoger"></interceptor-ref>
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+				</action>
+				<action name="findById" class="com.bjsxt.crud.action.CRUDAction" method="findById">
+					<interceptor-ref name="timeLoger"></interceptor-ref>
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+				</action>
+				<action name="update" class="com.bjsxt.crud.action.CRUDAction" method="update">
+					<interceptor-ref name="timeLoger"></interceptor-ref>
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+				</action>
+		</package> -->
+		<!-- 通过定义拦截器栈来定义拦截器 -->
+		<!-- <package name="crudPak" extends="struts-default" namespace="/crud">
+	      	<interceptors>
+	      		定义拦截器
+	      		<interceptor name="timeLoger" class="com.bjsxt.interceptor.LogInterceptor"></interceptor>
+	 定义拦截器栈，将自定义拦截器和defaultStack拦截器中引用的拦截器组合到一起，成为一个新的拦截器栈:crudStack
+	      		<interceptor-stack name="crudStack">
+	      			<interceptor-ref name="timeLoger"></interceptor-ref>
+	      			<interceptor-ref name="defaultStack"></interceptor-ref>
+	      		</interceptor-stack>
+	      	</interceptors>
+	 default-interceptor-ref默认当前包中所有的Action都是用crudStack拦截器栈进行拦截 
+	      	<default-interceptor-ref name="crudStack"></default-interceptor-ref>
+				<action name="create" class="com.bjsxt.crud.action.CRUDAction" method="create"></action>
+				<action name="findById" class="com.bjsxt.crud.action.CRUDAction" method="findById"></action>
+				<action name="update" class="com.bjsxt.crud.action.CRUDAction" method="update"></action>
+		</package> -->
+		
+	<!-- 定义全局拦截器 -->
+		<package name="basePack" extends="struts-default" abstract="true">
+			<interceptors>
+	      		<interceptor name="timeLoger" class="com.bjsxt.interceptor.LogInterceptor"></interceptor>
+	      		<interceptor-stack name="crudStack">
+	      			<interceptor-ref name="timeLoger"></interceptor-ref>
+	      			<interceptor-ref name="defaultStack"></interceptor-ref>
+	      		</interceptor-stack>
+	      	</interceptors>
+	      	<default-interceptor-ref name="crudStack"></default-interceptor-ref>
+		</package>
+		<package name="crudPack" extends="basePack" namespace="/crud">
+				<action name="create" class="com.bjsxt.crud.action.CRUDAction" method="create"></action>
+				<action name="findById" class="com.bjsxt.crud.action.CRUDAction" method="findById"></action>
+				<action name="update" class="com.bjsxt.crud.action.CRUDAction" method="update"></action>
+		</package>
+      </struts>

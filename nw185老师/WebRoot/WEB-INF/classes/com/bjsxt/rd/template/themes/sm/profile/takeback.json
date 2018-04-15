@@ -1,0 +1,37 @@
+{
+	
+	"baseDir": "D:/WS-PROJECTS/实训项目-NW185工商银行资产管理系统/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+	 	"enable" : "true",
+		"mapperName":"takeback.xml",
+		"package" : "entity",
+		"class" : "Takeback" , 
+		"tableName" : "t_takeback",
+		"id" : {"name" :"takebackId" , "column":"takeback_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+	 	"enable" : "true",
+		"package" : "dao",
+		"class" : "TakebackDAO",
+		"beanId" : "takebackDAO"
+	},
+	"service":{
+	    "enable" : "false"
+	},
+	"controller":{
+	    "enable" : "false"
+	},
+	"view":{
+	    "enable" : "false"
+	}
+}

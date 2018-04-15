@@ -1,0 +1,61 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"contract.xml",
+		"package" : "entity",
+		"class" : "Contract" , 
+		"tableName" : "t_contract",
+		"id" : {"name" :"contractId" , "column":"contract_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "ContractDAO",
+		"beanId" : "contractDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "ContractService",
+		"beanId" : "contractService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "ContractController",
+		"beanId" : "contractController",
+		"namespace" : "/contract"
+	},
+	"view" : {
+		"page" : "/contract.jsp" ,
+		"title" : "合同管理",
+		"datagrid" : {
+			"keyfield":"contract_id" ,
+			"columns" : [
+				{"title" : "合同日期" , "field" : "a" , "width" : "10%"},
+				{"title" : "合同编号" , "field" : "b" , "width" : "10%"},
+				{"title" : "供应商" , "field" : "c" , "width" : "10%"},
+				{"title" : "采购项目" , "field" : "d" , "width" : "10%"},
+				{"title" : "标题" , "field" : "e" , "width" : "10%"},
+				{"title" : "当前状态" , "field" : "f" , "width" : "10%"},
+				{"title" : "合同副本" , "field" : "g" , "width" : "10%"}
+			]
+		},
+		"form" : [
+			{"title" : "合同编号" , "property" : "contractName" , "type":"text" , "required":true },
+			{"title" : "合同名称" , "property" : "title" , "type":"text" , "required":true},
+			{"title" : "采购项目" , "property" : "projectId" , "type" : "combobox" , "required" : true},
+			{"title" : "采购日期" , "property" : "contractDate" ,  "type" : "date" ,"required" : true},
+			{"title" : "供应商" , "property" : "venderId","type" : "combobox" ,"required" : true},
+			{"title" : "合同副本" , "property" : "contractFile","type" : "text" ,"required" : true}
+		]
+	} 
+}

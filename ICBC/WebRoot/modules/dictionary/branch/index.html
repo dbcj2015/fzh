@@ -1,0 +1,69 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+    <body >
+    <script>
+		$(function(){
+			$('#treeBranch').tree({
+				onContextMenu: function(e, node){
+					e.preventDefault();
+					// select the node
+					$('#treeBranch').tree('select', node.target);
+					// display context menu
+					$('#meuBranch').menu('show', {
+						left: e.pageX,
+						top: e.pageY
+					});
+				}
+			});
+			
+			$("#meuBranch").menu({
+				onClick : function(item){
+					if(item.name == "meuBranchAdd" || item.name == "meuBranchEdit"){
+						$("#dlgBranchMain").dialog({
+							title : " " ,
+							width : 300 , 
+							height : 150 , 
+							href : "modules/dictionary/branch/editform.html" , 
+							modal : true
+						});
+					}
+				}
+			})
+		})	
+    
+    </script>
+    <div id="p" class="easyui-panel" title = "点击右键操作机构" 
+        style="width:500px;height:300px;padding:10px;background:#fafafa;"
+        data-options="closable:false,
+                collapsible:false,minimizable:false,maximizable:false">
+                
+ 
+        <div title="系统设置" data-options="iconCls:'icon-reload'">
+            <ul class="easyui-tree" id = "treeBranch">
+                <li><span>中国工商银行河北省省行</span>
+                    <ul>
+                    	<li><span>人事处</span></li>
+                        <li><span>信息科技处</span></li>
+                        <li><span>后勤处</span></li>
+                        <li><span>河北省工商银行石家庄分行</span><ul>
+                        	<li><span>人事处</span></li>
+                        	<li><span>XXX支行</span><ul><li>XXX营业部</li></ul></li></ul></li>
+                        <li><span>河北省工商银行保定分行</span><ul><li>XXX支行</li></ul></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+	</div>
+        
+    <div id="meuBranch" class="easyui-menu" style="width:120px;">
+    <div data-options="name : 'meuBranchAdd' , iconCls:'icon-add'">新增</div>
+    <div data-options="name : 'meuBranchEdit' , iconCls:'icon-edit'">修改</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:'icon-remove'">删除</div>
+</div>
+<div id = "dlgBranchMain"></div>
+</body>
+</html>

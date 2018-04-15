@@ -1,0 +1,85 @@
+1、什么是JSP？
+	全称：java server page.
+	jsp是多门技术的组合，主要是用来实现网页展现的。是一门动态网页技术，底层其实就是Servlet		
+2、为什么需要jsp?
+	（1）servlet的优缺点：
+		一门动态的网页技术
+		优点：业务逻辑书写很方便
+		缺点：页面展现很麻烦
+		 想怎么解决问题：
+		 	假如能够向html文件一样流畅的书写页面代码就会很爽
+		 		1、在html文件中写java代码
+		 		  	  反过来我们可以在java中写HTML--->servlet
+		 		创建一个中间类：
+		 			可以将HTML代码转译成java代码
+				 由此jsp就诞生了
+				 	解决Servlet页面展现麻烦的问题	 	
+	（2）jsp的优缺点:
+		优点：页面展现很方便
+		缺点：业务逻辑混乱 	
+	（3） servlet+jsp+javaBean		
+3、使用jsp？
+	(1)、创建jsp
+	(2)、jsp的访问原理：(重点)
+		a.jsp--->JspServlet---->a_jsp.java
+		访问jsp文件的时候会被jsp引擎拦截，将其转换成对应的servlet文件，并交由服务器调用执行
+4、jsp的语法：
+	jsp的常用指令：
+		<%@page 属性名="属性值"%>
+		page:
+			language:设置转译的文件类型
+			import:导入需要使用的包
+			pageEncoding:设置转译和发送的编码格式
+			session:设置转译好的servlet是否需要session对象，默认是带有的
+			errorPage:设置转译好的servlet运行时候的异常
+		include：
+			静态引入：
+				原文件和引入文件不可以有同名变量，会转译成一个java文件，耦合性高
+			动态引入：
+				原文件和引入文件可以有同名变量，各自转译，耦合性低
+		forward：
+			请求转发
+			注意：标签中间只能使用<jsp:param name="" value=""></jsp:param>来进行转发传参，不可以存在其他内容，否则会 报错。
+		useBean标签：自学了解
+			 操作javaBean
+			 设置和获取javaBean属性
+	jsp的局部声明:
+			<%
+				java代码
+			%>
+			会直接转译到jsp对应的servlet中的_jspService()方法中
+	jsp的全局声明:
+			<%!
+			
+				java代码，全局声明，一般声明方法
+			
+			%>
+			会转译为对应的成员方法
+	jsp的表达式:
+		<%=变量名/方法名()%>
+		注意：不要添加分号
+	jsp的注释: 
+		jsp注释：<%--注释内容--%>       不转译
+		java注释：//					转译不执行
+		html注释：<!--注释内容-->		转译并发送客户端
+	jsp的九大内置对象:
+			四个作用域：
+				pageContext
+				request
+				session
+				application
+			两个输出：
+				out
+				response
+			三个打酱油：
+				page
+				config
+				exception
+				
+		
+		
+		
+		
+		
+		
+		

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>418-project-listener&amp;filter</display-name> 
+   <!-- 功能过滤器:项目下所有的请求 -->
+  <filter>
+  	<filter-name>TestAllFilterClazz</filter-name>
+  	<filter-class>com.bjsxt.filter03.TestAllFilterClazz</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>TestAllFilterClazz</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- 功能过滤器:拦截指定功能的所有请求 -->
+  <filter>
+  	<filter-name>TestLittleFilter</filter-name>
+  	<filter-class>com.bjsxt.testfilter02.TestLittleFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>TestLittleFilter</filter-name>
+  	<url-pattern>*.little</url-pattern>
+  </filter-mapping>
+  <!--配置过滤器： 拦截指定的请求 -->
+	<filter>
+		<filter-name>TestFilter</filter-name>
+		<filter-class>TestFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>TestFilter</filter-name>
+		<url-pattern>/file01</url-pattern>
+	</filter-mapping>
+	
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>FilterServlet</servlet-name>
+    <servlet-class>FilterServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>Test01</servlet-name>
+    <servlet-class>com.bjsxt.test.Test01</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>LittleFilterServlet</servlet-name>
+    <servlet-class>com.bjsxt.testfilter02.LittleFilterServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>TestAllFilterServlet</servlet-name>
+    <servlet-class>com.bjsxt.filter03.TestAllFilterServlet</servlet-class>
+  </servlet>
+
+
+
+
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/file01</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Test01</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LittleFilterServlet</servlet-name>
+    <url-pattern>/.little</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TestAllFilterServlet</servlet-name>
+    <url-pattern>/all</url-pattern>
+  </servlet-mapping>
+    <!-- 配置监听器 -->
+  <listener>
+  	<listener-class>com.bjsxt.listener.TestListenerClazz</listener-class>
+  </listener>
+</web-app>

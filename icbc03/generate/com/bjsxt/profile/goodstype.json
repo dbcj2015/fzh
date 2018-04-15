@@ -1,0 +1,54 @@
+{
+	
+	"baseDir": "D:/WS-PROJECTS/实训项目-NW185工商银行资产管理系统/repository/code/nw185" ,  
+	"sourceDir" : "/test/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/test/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185.goodstype",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"goodstype.xml",
+		"package" : "entity",
+		"class" : "GoodsType" , 
+		"tableName" : "t_goodstype",
+		"id" : {"name" :"goodstypeId" , "column":"goodstype_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "GoodsTypeDAO",
+		"beanId" : "goodsTypeDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "GoodsTypeService",
+		"beanId" : "goodsTypeService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "GoodsTypeController",
+		"beanId" : "goodsTypeController",
+		"namespace" : "/goodstype"
+	},
+	"view" : {
+		"context" : "/hdjy-crm",
+		"page" : "/goodstype.jsp" ,
+		"datagrid" : {
+			"keyfield":"goodstype_id" ,
+			"columns" : [
+				{"title" : "类型编号" , "field" : "goodstype_id" , "width" : "10%"},
+				{"title" : "设备类型" , "field" : "goodstype_name" , "width" : "20%"}
+			]
+		},
+		"form" : [
+			{"title" : "模块名称" , "property" : "moduleName" , "type":"text" , "required":true },
+			{"title" : "描述" , "property" : "description" , "type":"text" , "required":true},
+			{"title" : "序号" , "property" : "sequence" , "type" : "number" , "required" : true ,"min" : 0 , "max" : 1000000 , "precision" : 0},
+			{"title" : "生效?" , "property" : "isvalid" ,  "type" : "combobox" ,"required" : true}
+		]
+	} 
+}

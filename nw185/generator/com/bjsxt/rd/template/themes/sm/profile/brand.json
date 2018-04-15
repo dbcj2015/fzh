@@ -1,0 +1,51 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"brand.xml",
+		"package" : "entity",
+		"class" : "Brand" , 
+		"tableName" : "t_brand",
+		"id" : {"name" :"brandId" , "column":"brand_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "BrandDAO",
+		"beanId" : "brandDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "BrandService",
+		"beanId" : "brandService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "BrandController",
+		"beanId" : "brandController",
+		"namespace" : "/brand"
+	},
+	"view" : {
+		"page" : "/brand.jsp" ,
+		"title" : "品牌管理" ,
+		"datagrid" : {
+			"keyfield":"brandId" ,
+			"columns" : [
+				{"title" : "品牌编号" , "field" : "brandId" , "width" : "10%"},
+				{"title" : "品牌名称" , "field" : "brandName" , "width" : "20%"}
+			]
+		},
+		"form" : [
+			{"title" : "设备名称" , "property" : "brandName" ,  "type" : "text" ,"required" : true}
+		]
+	} 
+}

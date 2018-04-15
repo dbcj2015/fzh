@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.ContractDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Contract">
+		INSERT INTO t_contract (contract_date,contract_code,vender_id,project_id,title,doc_file,state,create_user,create_time,update_time,update_user)
+		VALUES (#{contractDate},#{contractCode},#{venderId},#{projectId},#{title},#{docFile},#{state},#{createUser},#{createTime},#{updateTime},#{updateUser})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Contract">
+		UPDATE t_contract
+			SET  
+				contract_id = #{contractId}
+				,contract_date = #{contractDate}
+				,contract_code = #{contractCode}
+				,vender_id = #{venderId}
+				,project_id = #{projectId}
+				,title = #{title}
+				,doc_file = #{docFile}
+				,state = #{state}
+				,create_user = #{createUser}
+				,create_time = #{createTime}
+				,update_time = #{updateTime}
+				,update_user = #{updateUser}
+			WHERE contract_id = #{contractId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_contract where contract_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="java.util.LinkedHashMap">
+		select * from t_contract where contract_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+		SELECT * FROM t_contract c , t_project p , t_vender v 
+		WHERE c.project_id = p.project_id AND c.vender_id = v.vender_id 
+		<if test="contractCode != null">
+			and contract_code = #{contractCode}
+		</if>
+		<if test="st != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty"  resultType="java.util.LinkedHashMap">
+		SELECT count(*) cnt FROM t_contract c , t_project p , t_vender v 
+		WHERE c.project_id = p.project_id AND c.vender_id = v.vender_id 
+	</select>
+	
+	<select id="findByContractCode" parameterType="String" resultType="java.util.LinkedHashMap">
+		select * from t_contract where contract_code=#{value}
+	</select>
+</mapper>

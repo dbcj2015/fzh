@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.bjsxt.dao.EmpDao">
+  	<select id="findAll" resultType="java.util.LinkedHashMap">
+  		select * from emp order by sal
+  	</select>
+  	<insert id="insertAll" parameterType="com.bjsxt.entity.Emp">
+  	<!-- 批量插入数据 -->
+  		insert into emp (
+			  ename,
+			  job,
+			  mgr,
+			  hiredate,
+			  sal,
+			  comm,
+			  deptno
+			)
+			VALUES
+			  (
+			    #{ename},
+			    #{job},
+			    #{mgr},
+			    #{hiredate},
+			    #{sal},
+			    #{comm},
+			    #{deptno}
+			  )
+  	</insert>
+  </mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.BrandDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Brand">
+		INSERT INTO t_brand (brand_name)
+		VALUES (#{brandName})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Brand">
+		UPDATE t_brand
+			SET  
+				brand_id = #{brandId}
+				,brand_name = #{brandName}
+			WHERE brand_id = #{brandId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_brand where brand_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Brand">
+		select
+				t.brand_id brandId ,
+				t.brand_name brandName 
+		from t_brand t where t.brand_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.brand_id brandId ,
+				t.brand_name brandName 
+		 from t_brand t where 1=1 
+		<if test="brandId != null">
+		and t.brand_id =#{brandId}
+		</if>
+		<if test="brandName != null">
+		and t.brand_name =#{brandName}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_brand t where 1=1 
+		<if test="brandId != null">
+		and t.brand_id =#{brandId}
+		</if>
+		<if test="brandName != null">
+		and t.brand_name =#{brandName}
+		</if>
+	</select>
+
+</mapper>

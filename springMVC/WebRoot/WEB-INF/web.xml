@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>springMVC</display-name>
+  <!-- springMVC是利用servlet拦截请求数据 -->
+  <servlet>
+  	<servlet-name>dispatchSerevlet</servlet-name>
+  		<!-- DispatcherServlet的作用就是在Web容器启动的时候初始化ioc容器
+		  		相当于在tomcat启动的时候自动执行了 AppicationContext ctx = new ClassPathXmlApplicationContext("classpath:applicationContext.xml")
+		-->
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  		<init-param>
+  				<param-name>contextConfigLocation</param-name>
+		  		<param-value>classpath:applicationContext.xml</param-value>
+  		</init-param>
+  			<!-- 
+		  		没有load-on-startup,Servlet是在第一次请求的时候才被创建
+		  		但是设置了load-on-startup,则是在Tomcat启动的时候就自动被创建了
+		  		数值越大,代表加载越靠后
+		  	 -->
+		<load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>dispatchSerevlet</servlet-name>
+  		<!-- /代表对请求的根路径进行拦截,与Filter中配置 url-patter : /* 类似 -->
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!-- post方式中文乱码解决 -->
+  <filter>
+  	<filter-name>characterEncodingFilter</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  		<init-param>
+  			<param-name>encoding</param-name>
+  			<param-value>utf-8</param-value>
+  		</init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>characterEncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

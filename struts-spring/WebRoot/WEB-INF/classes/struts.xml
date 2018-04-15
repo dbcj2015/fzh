@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="crudPak" extends="struts-default" namespace="/crud">
+		<!-- Struts与Spring整合的时候,只需要将class="类名"改为spring 的bean Id即可 -->
+		<action name="create" class="crudAction" method="create"></action>
+		<action name="findById" class="crudAction" method="findById"></action>
+		<action name="update" class="crudAction" method="update"></action>
+	</package>
+</struts>

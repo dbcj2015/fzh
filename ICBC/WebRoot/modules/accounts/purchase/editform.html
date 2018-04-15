@@ -1,0 +1,86 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#editform table td{
+		padding : 3px;
+	}
+</style>
+
+<script>
+	$(function(){
+		$("#btnPurchaseSave").click(function(){
+					$("#dlgvoucher").dialog({
+					  width:700,
+					  height:300,
+					  modal:true,
+					  title : ' ' , 
+					  content : "<img src='image/nw180pic/storevoucher.png'></img>"
+					});
+			})
+	})
+</script>
+<form id="editform" method="post" style="margin:5px">
+    <table>
+    	<tr>
+            <td style="width:75px">
+                <label>项目名称:</label>
+            </td>
+            <td style="width:150px">
+                <select class="easyui-combobox" style="width:150px">
+                    <option value="0">项目1</option>
+                    <option value="1">项目2</option>
+                    <option value="2">项目3</option>
+                </select>
+            </td>
+    	</tr>
+        <tr>
+            <td>
+                <label>合同编号:</label>
+            </td>
+            <td>
+                <input class="easyui-validatebox" type="text" name="a" style = "width:150px"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>合同名称:</label>
+            </td>
+            <td>
+                <input class="easyui-validatebox" type="text" name="a" style = "width:150px"/>
+            </td>
+        </tr>      
+        <tr>
+            <td>
+                <label>供应商:</label>
+            </td>
+            <td>
+                <select class="easyui-combobox" style = "width:150px">
+                    <option value="0">用友</option>
+                    <option value="1">华为</option>
+                    <option value="2">京东方</option>
+                </select>
+            </td>
+        </tr>    
+        <tr>
+            <td>
+                <label>合同影印件:</label>
+            </td>
+            <td>
+                <input type="file" style="width:150px"/>
+            </td>
+        </tr>                                             
+    </table>
+    
+    <div style = "margin:10px 0px 0px 70px">
+    	<a id="btnPurchaseSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a id="btnPurchaseCancel" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>
+    
+</form>
+<div id = "dlgvoucher" /></div>
+</body>
+</html>

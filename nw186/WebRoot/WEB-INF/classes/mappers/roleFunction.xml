@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.RoleFunctionDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.RoleFunction">
+		INSERT INTO t_role_function (role_id,function_id)
+		VALUES (#{roleId},#{functionId})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.RoleFunction">
+		UPDATE t_role_function
+			SET  
+				rf_id = #{rfId}
+				,role_id = #{roleId}
+				,function_id = #{functionId}
+			WHERE rf_id = #{rfId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_role_function where rf_id = #{value}
+	</delete>
+	
+	<delete id="deleteByProperty" parameterType="java.util.Map">
+		DELETE FROM t_role_function where 1 = 1 
+		<if test="rfId == null and roleId == null and functionId == null">
+			and 1 = 2
+		</if>
+		<if test="rfId != null">
+		and rf_id =#{rfId}
+		</if>
+		<if test="roleId != null">
+		and role_id =#{roleId}
+		</if>
+		<if test="functionId != null">
+		and function_id =#{functionId}
+		</if>
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.RoleFunction">
+		select
+				t.rf_id rfId ,
+				t.role_id roleId ,
+				t.function_id functionId 
+		from t_role_function t where t.rf_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.rf_id rfId ,
+				t.role_id roleId ,
+				t.function_id functionId 
+		 from t_role_function t where 1=1 
+		<if test="rfId != null">
+		and t.rf_id =#{rfId}
+		</if>
+		<if test="roleId != null">
+		and t.role_id =#{roleId}
+		</if>
+		<if test="functionId != null">
+		and t.function_id =#{functionId}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_role_function t where 1=1 
+		<if test="rfId != null">
+		and t.rf_id =#{rfId}
+		</if>
+		<if test="roleId != null">
+		and t.role_id =#{roleId}
+		</if>
+		<if test="functionId != null">
+		and t.function_id =#{functionId}
+		</if>
+	</select>
+
+</mapper>

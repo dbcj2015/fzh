@@ -1,0 +1,55 @@
+{
+	"baseDir": "D:/WS-PROJECTS/实训项目-NW185工商银行资产管理系统/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+	    "enable" : "true" ,
+		"mapperName":"project.xml",
+		"package" : "entity",
+		"class" : "Project" , 
+		"tableName" : "t_project",
+		"id" : {"name" :"projectId" , "column":"project_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+	    "enable" : "true" ,
+		"package" : "dao",
+		"class" : "ProjectDAO",
+		"beanId" : "projectDAO"
+	},
+	"service" : {
+	    "enable" : "true" ,
+		"package" : "service",
+		"class" : "ProjectService",
+		"beanId" : "projectService"
+	},
+	"controller" : {
+	    "enable" : "true" ,
+		"package" : "controller",
+		"class" : "ProjectController",
+		"beanId" : "projectController",
+		"namespace" : "/project"
+	},
+	"view" : {
+		"page" : "/dictionary/project.jsp" ,
+		"title" : "项目管理" ,
+		"datagrid" : {
+			"keyfield":"projectId" ,
+			"columns" : [
+				{"title" : "项目名称" , "field" : "projectName" , "width" : "20%"},
+				{"title" : "年份" , "field" : "year" , "width" : "10%"}
+			]
+		},
+		"form" : [
+			{"title" : "项目名称" , "property" : "projectName" ,  "type" : "text" ,"required" : true},
+		    {"title" : "年份" , "property" : "year" ,  "type" : "text" ,"required" : true}
+		]
+	}
+}

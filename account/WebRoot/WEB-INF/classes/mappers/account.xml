@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.AccountDao">
+	<select id="selectAll" resultType="java.util.LinkedHashMap">
+		SELECT card_type , SUM(POS消费) pos_consume, SUM(POS消费笔数) pos_amount,SUM(存款) c_money,SUM(存款笔数) c_amount,SUM(取款) q_money,SUM(取款笔数) q_amount, SUM(转账) z_money,SUM(转账笔数) z_amount FROM (
+	SELECT total.*,
+		CASE WHEN oper_no=1314 THEN 消费笔数 ELSE 0 END 'POS消费笔数',
+		CASE WHEN oper_no=1315 THEN 消费笔数 ELSE 0 END '存款笔数',
+		CASE WHEN oper_no=1316 THEN 消费笔数 ELSE 0 END '取款笔数',
+		CASE WHEN oper_no=1317 THEN 消费笔数 ELSE 0 END '转账笔数'
+	FROM
+		
+		(SELECT su.* , 
+			CASE WHEN oper_no = 1314 THEN amt ELSE 0 END 'POS消费' , 
+			CASE WHEN oper_no = 1315 THEN amt ELSE 0  END '存款' ,
+			CASE WHEN oper_no = 1316 THEN amt ELSE  0 END '取款' ,
+			CASE WHEN oper_no = 1317 THEN amt ELSE  0  END '转账'
+			
+		 FROM (
+			SELECT  SUBSTR(ct , 2) card_type , oper_no , COUNT(*) '消费笔数' , SUM(amt) amt FROM (
+				SELECT c.* ,
+					CASE 
+					WHEN SUBSTR(card_no , 1 ,6) IN ('955880' , '955881') THEN '1牡丹灵通卡'
+					WHEN SUBSTR(card_no , 1 ,6) IN ('955882' , '622202' , '622203') THEN '2E时代'
+					WHEN SUBSTR(card_no , 1 ,6) IN ('955888') THEN '3理财金'
+					END ct
+				 FROM t_card_op_log  c
+			 ) s GROUP BY ct , oper_no ORDER BY ct
+		) su) total
+	) r GROUP BY card_type
+	</select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.EquipDao">
+	<insert id="addEquip" parameterType="com.bjsxt.entity.Equipment">
+		insert into t_equipment(e_type ,e_brand,e_model ) 
+		values(#{typeId},#{brandId},#{model})
+	</insert>
+	<select id="findAll" resultType="java.util.LinkedHashMap">
+		select * from t_equipment
+	</select>
+	<select id="findType" resultType="java.util.LinkedHashMap">
+		select * from t_type
+	</select>
+	
+	<select id="findBrand" resultType="java.util.LinkedHashMap">
+		select * from t_brand
+	</select>
+</mapper >

@@ -1,0 +1,7 @@
+1. 生成Asset代码,注意不要生成ServiceController View
+2. 在COntractDetail表中增加state字段,相应的xml dao也要进行修改
+3. 在ContractService类里面增加store方法
+4. 创建BussinessException自定义异常
+5. cotnractDetail.jsp 增加设备入库按钮,改为多选模式
+6. 对设备入库按钮采用AJAX发送请求,将前台多选择结果组织为1,2,3,4的数组发送到Controller
+7. Controller对字符串转换为数组,调用service.store()实现入库的底层逻辑

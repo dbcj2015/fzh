@@ -1,0 +1,56 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridBreakDown").datagrid({
+					url:"modules/maintenance/breakdown/breakdown.json",
+					//定义列
+					columns:
+					[
+						[
+							{field:'a',title:'设备编号',width:100},
+							{field:'b',title:'设备类型',width:100},
+							{field:'c',title:'设备品牌',width:100},
+							{field:'d',title:'设备型号',width:100},						
+							{field:'e',title:'运行状况',width:100},
+							{field:'f',title:'所在部门',width:100},
+							{field:'g',title:'使用人',width:100}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbBreakDown' ,
+					pagination : true//分页栏
+				});	
+				
+				$("#tlbBreakdown").click(function(){
+					$("#dlgBreakDownMain").dialog({
+						title : " " , 
+						width : 300 , 
+						height : 250 , 
+						href : "modules/maintenance/breakdown/editform.html"
+					});	
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'gridBreakDown'></table>
+    <div id="tbBreakDown">
+		<div style="padding: 5px 0px 5px 5px">
+            <label>设备编号:</label>
+            <input class="easyui-validatebox" style="width:150px"/>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a>
+            <a id = "tlbBreakdown" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">故障登记</a>
+            
+        </div>
+	</div>
+    <div id="dlgBreakDownMain"></div>
+</body>
+</html>

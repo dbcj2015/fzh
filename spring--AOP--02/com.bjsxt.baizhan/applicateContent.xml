@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd        
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        <bean id="eval" class="com.bjsxt.service.EvalService"></bean>
+        <bean id="exam" class="com.bjsxt.service.ExamService"></bean>
+        <bean id="learn" class="com.bjsxt.service.LearningService"></bean>
+        <!-- 注册通知类:切面 -->
+        <bean id="timer" class="com.bjsxt.aspect.TimePlugin"></bean>
+        <!-- 配置(切面)插件，让插件生效 -->
+        <aop:config>
+        	<!-- 通知Spring id="timer"的对象是一个插件 -->
+        	<aop:aspect ref="timer">
+        		<!-- 切点 ,切点用来决定这个切面用在哪些类的哪些方法上-->
+				<!-- 将切面用在baizhan包中所有类名以Service结尾的类的所有方法上 -->
+        		<aop:pointcut expression="execution(* com.bjsxt.service..*Service.*(..))" id="pc"/>
+        		<!-- 环绕通知 -->
+        		<!-- 在执行任何service方法之前，程序自动运行TimePlugin.doAround()方法，对程序行为进行扩展 -->
+        		<!-- 如果终止插件运行直接将下面的代码注解即可 -->
+        		<aop:around method="doAround" pointcut-ref="pc"/>
+        	</aop:aspect>
+        </aop:config>
+</beans>
+
+
+
+
+
+
+
+
+
+

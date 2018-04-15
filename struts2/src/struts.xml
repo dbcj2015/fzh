@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+        <!-- 定义包,用于定义动作的前缀("/")
+		extends="struts-default" 代表默认继承struts的配置,写死的,必须写
+		namespace = "/" 相当于在spring MVC 类级别上的RequestMapping("/")
+	 -->
+	<struts>
+		<include file="struts-entity.xml"></include>
+		<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+		<package name="FirstStruts" extends="struts-default" namespace="/test">
+			<!-- 定义Action(动作),用于绑定类的方法到指定的url上
+			将com.bjsxt.struts2.FirstAction.hello()方法绑定到 /h的地址上
+		 -->
+		 <action name="h" class="com.bjsxt.struts2.FirstStruts2" method="firstStruts">
+		 	<result name="success">/MyStruts.jsp</result>
+		 </action>
+		 <action name="t" class="com.bjsxt.struts2.TestAction" method="action">
+		 	<result name="success">/MyStruts.jsp</result>
+		 </action>
+		</package>
+		
+		<package name="testAction" extends="struts-default" namespace="/">
+			<action name="test" class="com.bjsxt.struts2.TestAction" method="action">
+				<result name="success">/MyStruts.jsp</result>
+			</action>
+			<action name="reg" class="com.bjsxt.struts2.action.ActionCategory" method="toReg">
+				<result name="success">/MyStruts.jsp</result>
+			</action>
+		</package>
+		<!-- 动态方法访问action中的方法 -->
+		
+		<package name="testDMI" extends="struts-default" namespace="/dmi">
+			<action name="dmi" class="com.bjsxt.action.actionsupport.TestActionSupport">
+				<result name="success">/MyStruts.jsp</result>
+			</action>
+		</package>
+	</struts>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.EmpDao">
+<select id="findByCondition" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+	select * from emp where 1=1
+	<if test="param !=null">
+		and ename like #{param}
+	</if>
+	
+	<if test="minsal != null and maxsal != null ">
+		and sal between #{minsal} and #{maxsal}
+	</if>
+	
+	<!-- Map String[]{"SALESMAN" , "Actor" , "CLERK"}
+			and job in ('SALESMAN' , 'Actor' , 'CLERK')
+		 -->
+		<if test="jobs != null"> 
+			<!-- 利用forEach标签生成in -->
+			<!-- collection代表数据源 -->
+			
+			<!-- 
+				String inst = "("
+				for(Int i = 0 ; i < jobs.length ; i++){
+					String job = jobs[i];
+					inst = inst + job + ",";
+				}
+				inst = inst.substring(0,inst.length()-1) + ")";
+			 	('SALESMAN' , 'Actor' , 'CLERK')
+			 -->
+			and job in 
+			<foreach collection="jobs" open="(" close=")" separator="," index="i" item="job">
+				#{job}
+			</foreach>
+			<!-- ${}是指将对象的值不经过任何转义直接塞入SQL语句中
+			and ${subsql} -->
+		</if>
+</select>
+</mapper>

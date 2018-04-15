@@ -1,0 +1,59 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridproject").datagrid({
+					url:"modules/dictionary/project/project.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'年度',width:100 ,align:'center'},
+						{field:'b',title:'项目名称',width:500 ,align:'center'}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbproject' ,
+					pagination : true//分页栏
+				});
+				$("#tlbprojectNew , #tlbprojectEdit").click(function(){
+						$("#dlgprojectMain").dialog({
+						  width:330,
+						  height:150,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/dictionary/project/editform.html'
+						});
+					}
+				);
+								
+				$("#tlbprojectDelete").click(function(){
+					$.messager.confirm('警告', '确定要删除选中的记录吗?', function(r){
+						if (r){
+							// exit action;
+						}
+					});
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'gridproject'></table>
+    <div id="tbproject">
+
+		<div style="padding: 5px 0px 5px 5px">
+            <a id = "tlbprojectNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新建</a>
+			<a id = "tlbprojectEdit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a id = "tlbprojectDelete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        </div>
+	</div>
+    <div id="dlgprojectMain"></div>
+</body>
+</html>

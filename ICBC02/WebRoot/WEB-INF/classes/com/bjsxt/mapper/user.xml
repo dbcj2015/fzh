@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.EmpDao">
+<select id="find" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+	select u.*,e.* from t_user u,t_employee e where u.emp_id=e.emp_id
+	<if test="username!=null">
+		and u.user_name=#{username}
+	</if>
+</select>
+<!-- 选出员工所具有的功能 -->
+</mapper >

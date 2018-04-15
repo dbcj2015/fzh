@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.ProjectDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Project">
+		INSERT INTO t_project (project_name,year)
+		VALUES (#{projectName},#{year})
+		<selectKey keyProperty="projectId" keyColumn="project_id" resultType="Integer" order="AFTER">  
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Project">
+		UPDATE t_project
+			SET  
+				project_id = #{projectId}
+				,project_name = #{projectName}
+				,year = #{year}
+			WHERE project_id = #{projectId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_project where project_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Project">
+		select
+				t.project_id projectId ,
+				t.project_name projectName ,
+				t.year year 
+		from t_project t where t.project_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select * from t_project t where 1=1 
+		<if test="projectId != null">
+		and t.project_id =#{projectId}
+		</if>
+		<if test="projectName != null">
+		and t.project_name =#{projectName}
+		</if>
+		<if test="year != null">
+		and t.year =#{year}
+		</if>
+		
+		<if test="orderby != null">
+		 order by #{orderby}
+		</if>
+		
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_project t where 1=1 
+		<if test="projectId != null">
+		and t.project_id =#{projectId}
+		</if>
+		<if test="projectName != null">
+		and t.project_name =#{projectName}
+		</if>
+		<if test="year != null">
+		and t.year =#{year}
+		</if>
+	</select>
+
+</mapper>

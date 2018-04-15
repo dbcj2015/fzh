@@ -1,0 +1,44 @@
+{
+	
+	"baseDir": "D:/WS-PROJECTS/实训项目-NW185工商银行资产管理系统/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+	 	"enable" : "false",
+		"mapperName":"fault.xml",
+		"package" : "entity",
+		"class" : "Fault" , 
+		"tableName" : "t_fault",
+		"id" : {"name" :"faultId" , "column":"fault_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+	 	"enable" : "false",
+		"package" : "dao",
+		"class" : "FaultDAO",
+		"beanId" : "faultDAO"
+	},
+	"service" : {
+	 	"enable" : "true",
+		"package" : "service",
+		"class" : "FaultService",
+		"beanId" : "faultService"
+	},
+	"controller" : {
+	 	"enable" : "true",
+		"package" : "controller",
+		"class" : "FaultController",
+		"beanId" : "faultController",
+		"namespace" : "/fault"
+	},
+	"view" :{
+	    "enable" : "false"
+	}
+}

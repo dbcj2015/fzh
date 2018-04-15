@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="emp"><!-- namespace叫做名命名空间,其实就是代表SQL语句的前缀部分 -->
+<!-- 查询语句用select标签 id是唯一标识, resultType代表将查询的每一条记录自动包装为Map对象 -->
+	<select id="selectAll" resultType="java.util.Map">
+		select * from emp
+	</select>
+	
+	<!-- 自定义实体类存储数据 -->
+	<!-- 如果返回实体类的时候,属性名与字段名相同的情况下,自动完成setXX的工作 -->
+	<select id="entity" resultType="com.bjsxt.map.entity.Emp">
+		select * from emp
+	</select>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.bjsxt.map.entity.Emp">
+		INSERT INTO 
+			emp (ename,job,mgr,hiredate,sal,comm,deptno)
+		VALUES
+		  (#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptno})
+	</insert>
+	
+	<!-- 更新数据 -->
+	<!-- 定义了一个findById方法,要求传递一个整形,返回对应的实体 
+		当参数是基本类型的时候例如: Integer Double String Float.... #{value}就代表这个值
+	-->
+	<select id="findById" parameterType="int" resultType="com.bjsxt.map.entity.Emp">
+	<!-- #{ename} 代表将参数Emp对象中的ename属性作为参数传递到sql中 -->
+		select * from emp where empno=#{value}
+	</select>
+	<update id="update" parameterType="com.bjsxt.map.entity.Emp">
+		UPDATE
+		  emp
+		SET
+		  ename = #{ename},
+		  job = #{job},
+		  mgr = #{mgr},
+		  hiredate = #{hiredate},
+		  sal = #{sal},
+		  comm = #{comm},
+		  deptno = #{deptno}
+		WHERE empno = #{empno}
+	</update>
+	
+	<!-- 删除数据 -->
+	<delete id="delete" parameterType="int">
+		delete from emp where empno=#{value}
+	</delete>
+</mapper>

@@ -1,0 +1,51 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"role.xml",
+		"package" : "entity",
+		"class" : "Role" , 
+		"tableName" : "t_role",
+		"id" : {"name" :"roleId" , "column":"role_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "RoleDAO",
+		"beanId" : "roleDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "RoleService",
+		"beanId" : "roleService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "RoleController",
+		"beanId" : "roleController",
+		"namespace" : "/role"
+	},
+	"view" : {
+		"title" : "角色管理",
+		"page" : "/promission/role.jsp" ,
+		"datagrid" : {
+			"keyfield":"roleId" ,
+			"columns" : [
+				{"title" : "角色编号" , "field" : "roleId" , "width" : "10%"},
+				{"title" : "角色名称" , "field" : "roleName" , "width" : "20%"}
+			]
+		},
+		"form" : [
+			{"title" : "角色名称" , "property" : "roleName" ,  "type" : "text" ,"required" : true}
+		]
+	} 
+}

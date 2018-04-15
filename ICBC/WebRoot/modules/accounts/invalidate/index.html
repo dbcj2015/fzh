@@ -1,0 +1,82 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridInvalidate").datagrid({
+					url:"modules/accounts/invalidate/invalidate.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'设备类型',width:100 },
+						{field:'b',title:'设备品牌',width:100},
+						{field:'c',title:'设备型号',width:100},
+						{field:'d',title:'设备编号',width:100},
+						{field:'e',title:'使用部门',width:100},
+						{field:'f',title:'使用人',width:100 }
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbInvalidate' ,
+					pagination : true//分页栏
+				});
+			}
+		);
+		
+		$(function(){
+			$("#btnInvalidate").click(
+				function(){
+					$.messager.confirm('警告', '确定要报废这些设备吗?', function(r){
+						if (r){
+							$("#dlgInvalidateMain").dialog({
+							  width:850,
+							  height:400,
+							  modal:true,
+							  title : ' ' , 
+							  content : "<img src='image/nw180pic/Invalidatevoucher.png'></img>"
+							});
+						}
+					});				
+					
+				}
+			);
+		})		
+	</script>
+    
+	<table id = 'gridInvalidate'></table>
+    <div id="tbInvalidate">
+		<div style="padding: 5px 0px 5px 5px">
+            <label>设备类型:</label>
+            <select class="easyui-combobox" style = "width:100px">
+                <option value="0">设备类型1</option>
+                <option value="1">设备类型2</option>
+                <option value="2">设备类型3</option>
+            </select>
+            
+            <label>&nbsp;&nbsp;设备品牌:</label>
+            <select class="easyui-combobox" style = "width:100px" >
+                <option value="0">设备品牌1</option>
+                <option value="1">设备品牌2</option>
+                <option value="2">设备品牌3</option>
+            </select>
+            <label>&nbsp;&nbsp;设备型号:</label>
+            <select class="easyui-combobox" style = "width:100px" >
+                <option value="0">设备型号1</option>
+                <option value="1">设备型号2</option>
+                <option value="2">设备型号3</option>
+            </select>
+            <label>&nbsp;&nbsp;设备编号:</label> <input class="easyui-validatebox" type="text" name="a" style = "width:50px"/>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a>
+            <a id="btnInvalidate"href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">报废</a>
+        </div>
+	</div>
+    <div id="dlgInvalidateMain"></div>
+</body>
+</html>

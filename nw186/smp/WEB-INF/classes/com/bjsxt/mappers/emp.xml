@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.EmpDao">
+<select id="findPage" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+	select e.* , d.dname from t_employee e, t_department d where e.dept_id = d.dept_id order by e.emp_id asc limit #{st} , #{rows}
+</select>
+<select id="countAll" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+	select count(*) cnt from t_employee
+</select>
+<!-- 根据姓名，岗位进行多条件动态查询 -->
+<select id="findByCondition" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+	select e.* , d.dname from t_employee e, t_department d where e.dept_id = d.dept_id
+	<if test="en!=null">
+		and name like #{en}
+	</if>
+	<if test="jobs!=null and jobs.length>0">
+	and job in
+		<foreach collection="jobs" open="(" close=")" separator="," item="j" index="i">
+			#{j}
+		</foreach>
+	</if>
+	order by e.emp_id asc limit #{st} , #{rows}
+</select>
+<select id="countByCondition" parameterType="Map" resultType="java.util.LinkedHashMap">
+	select count(*) from t_employee where 1=1
+	<if test="en!=null">
+		and name like #{en}
+	</if>
+	<if test="jobs!=null and jobs.length>0">
+	and job in
+		<foreach collection="jobs" open="(" close=")" separator="," item="j" index="i">
+			#{j}
+		</foreach>
+	</if>
+</select>
+
+<insert id="insertById" parameterType="com.bjsxt.entity.Emp">
+	INSERT INTO t_employee (
+		  dept_id,
+		  NAME,
+		  mobile,
+		  job,
+		  email
+		)
+		VALUES
+		  (
+		    #{deptId},
+		    #{name},
+		    #{mobile},
+		    #{job},
+		    #{email}
+		  )
+</insert>
+<select id="findById" parameterType="Integer" resultType="com.bjsxt.entity.Emp">
+		select * from t_employee where emp_id = #{value}
+</select>
+<update id="update" parameterType="com.bjsxt.entity.Emp">
+	UPDATE t_employee SET name =#{name} , dept_id = #{deptId} , mobile = #{mobile} , job = #{job} , email =#{email} WHERE emp_id = #{empId}
+</update>
+<delete id="delete" parameterType="java.util.Map">
+	DELETE FROM t_employee where
+	emp_id in
+	<foreach collection="list" open="(" separator="," close=")" item="j" index="i">
+	 #{j}
+	 </foreach>
+</delete>
+</mapper>

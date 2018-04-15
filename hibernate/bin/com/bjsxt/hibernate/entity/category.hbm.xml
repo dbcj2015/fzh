@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bjsxt.hibernate.entity.Category" table="t_category">
+		<id name="categoryId" column="category_id">
+			<!-- 主键生成器 -->
+			<generator class="native"></generator>
+		</id>
+		<version name="sversion" column="t_sversion"></version>
+		<property name="categoryName" column="category_name"></property>
+		<property name="parentId" column="parent_id"></property>
+		<property name="categoryLevel" column="category_level"></property>
+		<property name="categoryOrder" column="category_order"></property>
+		
+	</class>
+</hibernate-mapping>

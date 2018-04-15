@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.FunctionDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Function">
+		INSERT INTO t_function (function_name,url,module_id,icon)
+		VALUES (#{functionName},#{url},#{moduleId},#{icon})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Function">
+		UPDATE t_function
+			SET  
+				function_id = #{functionId}
+				,function_name = #{functionName}
+				,url = #{url}
+				,module_id = #{moduleId}
+				,icon = #{icon}
+			WHERE function_id = #{functionId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_function where function_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Function">
+		select
+				t.function_id functionId ,
+				t.function_name functionName ,
+				t.url url ,
+				t.module_id moduleId ,
+				t.icon icon 
+		from t_function t where t.function_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.function_id functionId ,
+				t.function_name functionName ,
+				t.url url ,
+				t.module_id moduleId ,
+				t.icon icon ,
+				m.module_name moduleName 
+		 from t_function t , t_module m
+		 
+		 where 1=1 and t.module_id = m.module_id  
+		<if test="functionId != null">
+		and t.function_id =#{functionId}
+		</if>
+		<if test="functionName != null">
+		and t.function_name =#{functionName}
+		</if>
+		<if test="url != null">
+		and t.url =#{url}
+		</if>
+		<if test="moduleId != null">
+		and t.module_id =#{moduleId}
+		</if>
+		<if test="icon != null">
+		and t.icon =#{icon}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_function t where 1=1 
+		<if test="functionId != null">
+		and t.function_id =#{functionId}
+		</if>
+		<if test="functionName != null">
+		and t.function_name =#{functionName}
+		</if>
+		<if test="url != null">
+		and t.url =#{url}
+		</if>
+		<if test="moduleId != null">
+		and t.module_id =#{moduleId}
+		</if>
+		<if test="icon != null">
+		and t.icon =#{icon}
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,36 @@
+{
+	"baseDir": "E:/MyEclipseWorkSpace/ICBC02" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.icbc02",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/picbc?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : "root"
+	},
+	"model" : {
+		"mapperName":"project.xml",
+		"package" : "entity",
+		"class" : "Project" , 
+		"tableName" : "t_project",
+		"id" : {"name" :"projectId" , "column":"project_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "ProjectDAO",
+		"beanId" : "projectDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "ProjectService",
+		"beanId" : "projectService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "ProjectController",
+		"beanId" : "projectController",
+		"namespace" : "/project"
+	}
+}

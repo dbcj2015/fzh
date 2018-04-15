@@ -1,0 +1,56 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"function.xml",
+		"package" : "entity",
+		"class" : "Function" , 
+		"tableName" : "t_function",
+		"id" : {"name" :"functionId" , "column":"function_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "FunctionDAO",
+		"beanId" : "functionDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "FunctionService",
+		"beanId" : "functionService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "FunctionController",
+		"beanId" : "functionController",
+		"namespace" : "/function"
+	},
+	"view" : {
+		"title" : "功能模块管理",
+		"page" : "/promission/function.jsp" ,
+		"datagrid" : {
+			"keyfield":"functionId" ,
+			"columns" : [
+				{"title" : "模块名称" , "field" : "moduleName" , "width" : "10%"},
+				{"title" : "功能名称" , "field" : "functionName" , "width" : "20%"},
+				{"title" : "URL" , "field" : "url" , "width" : "30%"},
+				{"title" : "图标" , "field" : "icon" , "width" : "10%"}
+			]
+		},
+		"form" : [
+			{"title" : "功能名称" , "property" : "functionName" ,  "type" : "text" ,"required" : true},
+			{"title" : "隶属模块" , "property" : "moduleId" ,  "type" : "combobox" ,"required" : true},
+			{"title" : "URL" , "property" : "url" ,  "type" : "text" ,"required" : true},
+			{"title" : "功能图标" , "property" : "icon" ,  "type" : "text" ,"required" : true}
+		]
+	} 
+}

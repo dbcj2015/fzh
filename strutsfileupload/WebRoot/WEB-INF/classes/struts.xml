@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+        <struts>
+        	<package name="fileUpload" extends="struts-default" namespace="/">
+        		<action name="upload" class="com.bjsxt.fileupload.UploadAction" method="upload">
+        			<result name="success">/upload.jsp</result>
+        		</action>
+        		<action name="IOUpload" class="com.bjsxt.fileupload.UploadAction" method="fileUpload">
+        			<result name="success">/upload.jsp</result>
+        		</action>
+        	</package>
+<!--上传文件大小的控制:10M  -->
+			<constant name="struts.multipart.maxSize" value="104857600"></constant>
+			<package name="fileMaxSize" extends="struts-default" namespace="/">
+				<action name="maxSize" class="com.bjsxt.fileuploadsize.action.UploadSize" method="upload">
+					<result name="input">/fileupload.jsp</result>
+					<interceptor-ref name="fileUpload">
+						<param name="maximumSize">1048576</param>
+					</interceptor-ref>
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+				</action>
+			</package>
+        </struts>

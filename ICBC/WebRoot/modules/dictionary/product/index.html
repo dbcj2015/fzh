@@ -1,0 +1,183 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body>
+<script type="text/javascript">
+	var oper="add";
+	var method="productEditform";
+	$(function(){
+		$("#stype").combobox({
+			url:"/icbc/equip/type",
+			valueField : "tid" ,
+			textField :"typename",
+			value : -1 //代表默认选中value=-1的选项
+		});
+	});
+	
+	function typeFormmater(name){
+		if(value==1){
+			return "打印机";
+		}else if(value==2){
+			return "传真机";
+		}
+	}
+	$(function(){
+		$("#tbrand").combobox({
+			url:"/icbc/equip/brand",
+			valueField : "bid" ,
+			textField :"brandname",
+			value : -1 //代表默认选中value=-1的选项
+		});
+	});
+	$(function(){
+		$("#btnproductSave").click(function(){
+			if(oper=="add"){
+				method="productEditform";
+			}else if(oper=="update"){
+				method="updateform";
+			}
+			$("#"+method).form("submit",{
+				url:"/icbc/equip/"+oper,
+				success:function(data){
+					var json = $.parseJSON(data);
+					if(json.result == true){
+						$.messager.alert("通知" , json.message ,"warning", function(){
+							$("#productEditform").dialog("close");//关闭对话框
+							
+							$("#gridproduct").datagrid("reload");
+						}) //EASYUI为我们提供的alert（）警告框的替代者
+					}else{
+						$.messager.alert("错误" , json.message ,"error");
+					}
+				}
+			});
+		});
+	});
+
+	$(function(){
+				//设置页面数据表格
+				$("#gridproduct").datagrid({
+					url:"/icbc/equip/find",
+					columns:
+					[
+						[
+						{field:'xx',checkbox:'true',width:100},
+						{field:'e_id',title:'设备编号',width:200 ,align:'center'},
+						{field:'e_type',title:'设备类型',width:200 ,align:'center'},
+						{field:'e_brand',title:'设备品牌',width:200 ,align:'center'},
+						{field:'e_model',title:'设备型号',width:200 ,align:'center'}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbproduct' ,
+					pagination : true//分页栏
+				});
+				$("#tlbproductNew").click(function(){
+						var oper="add";
+						$("#productEditform").dialog({
+						  width:330,
+						  height:200,
+						  modal:true,
+						  title : '设备型号管理表 ' , 
+						  buttons:"#digBtns"
+						});
+					});				
+			});
+	
+	//修改列表
+		$(function(){
+			$("#tlbproductEdit").click(function(){
+				var recs = $("#gridproduct").datagrid("getSelections");
+				if(recs.length == 0 || recs.length >1){
+					$.messager.alert("警告" , "请选择一条要修改的记录" , "warning");
+					return;
+				}
+				oper="update";
+				$("#updateform").dialog({
+					width:330,
+					height:100,
+				    modal:true,
+				    title : '更改管理表 ' ,
+				    modal : true,
+				    buttons:"#digBtns"
+				});
+			});
+		});
+</script>
+
+	<table id = 'gridproduct' ></table>
+	<form id="productEditform" method="post" style="margin:5px">
+    <table>
+    	<tr>
+            <td style="width:75px">
+                <label>设备类型：</label>
+            </td>
+            <td style="width:150px">
+               <select id="stype" class="easyui-combox"  name="typeId" style = "width:150px" formatter="typeFormmater">
+             
+               </select>
+            </td>
+    	</tr>    
+        <tr>
+            <td style="width:75px">
+                <label>设备品牌：</label>
+            </td>
+            <td style="width:150px">
+               <select id="tbrand" class="easyui-combox"  name="brandId" style = "width:150px">
+               		
+               </select>
+            </td>
+    	</tr>      
+        <tr>
+            <td style="width:75px">
+                <label>设备型号：</label>
+            </td>
+            <td style="width:150px">
+               <input class="easyui-validatebox" style="width:150px" name="model"/>
+            </td>
+    	</tr>                 
+    </table>
+	</form>
+
+    <div style = "margin:10px 0px 0px 70px" id="digBtns">
+    	<a id="btnproductSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a id="btnproductCancel" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>    
+
+	
+    <div id="tbproduct">
+		<div style="padding: 5px 0px 5px 5px">
+            <a id = "tlbproductNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新建</a>
+			<a id = "tlbproductEdit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a id = "tlbproductDelete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        </div>
+	</div>
+    <div id="dlgproductMain"></div>
+    <!-- 用于更改表中数据时，显示的对话框 -->
+    <form id="updateform" method="post" style="margin:5px">
+    <table>
+    	<tr>
+            <td style="width:75px">设备类型:</td>
+            <td style="width:150px">
+               <input type="text" name="typeId" class="easyui-textbox" style = "width:150px">
+            </td>
+    	</tr>    
+        <tr>
+            <td style="width:75px">设备品牌:</td>
+            <td style="width:150px">
+               <input type="text" name="brandId" class="easyui-textbox" style = "width:150px">
+            </td>
+    	</tr>      
+        <tr>
+            <td style="width:75px">设备型号: </td>
+            <td style="width:150px">
+               <input class="easyui-validatebox" style="width:150px" name="model" class="easyui-textbox"/>
+            </td>
+    	</tr>                 
+    </table>
+	</form>
+</body>
+</html>

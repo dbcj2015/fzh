@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.BranchDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Branch">
+		INSERT INTO t_branch (branch_name,parent_id,branch_nature,branch_level,branch_path,address,phone,contact,full_spell,simple_spell)
+		VALUES (#{branchName},#{parentId},#{branchNature},#{branchLevel},#{branchPath},#{address},#{phone},#{contact},#{fullSpell},#{simpleSpell})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Branch">
+		UPDATE t_branch
+			SET  
+				branch_id = #{branchId}
+				,branch_name = #{branchName}
+				,parent_id = #{parentId}
+				,branch_nature = #{branchNature}
+				,branch_level = #{branchLevel}
+				,branch_path = #{branchPath}
+				,address = #{address}
+				,phone = #{phone}
+				,contact = #{contact}
+				,full_spell = #{fullSpell}
+				,simple_spell = #{simpleSpell}
+			WHERE branch_id = #{branchId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_branch where branch_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Branch">
+		select
+				t.branch_id branchId ,
+				t.branch_name branchName ,
+				t.parent_id parentId ,
+				t.branch_nature branchNature ,
+				t.branch_level branchLevel ,
+				t.branch_path branchPath ,
+				t.address address ,
+				t.phone phone ,
+				t.contact contact ,
+				t.full_spell fullSpell ,
+				t.simple_spell simpleSpell 
+		from t_branch t where t.branch_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.branch_id branchId ,
+				t.branch_name branchName ,
+				t.parent_id parentId ,
+				t.branch_nature branchNature ,
+				t.branch_level branchLevel ,
+				t.branch_path branchPath ,
+				t.address address ,
+				t.phone phone ,
+				t.contact contact ,
+				t.full_spell fullSpell ,
+				t.simple_spell simpleSpell 
+		 from t_branch t where 1=1 
+		<if test="branchId != null">
+		and t.branch_id =#{branchId}
+		</if>
+		<if test="branchName != null">
+		and t.branch_name =#{branchName}
+		</if>
+		<if test="parentId != null">
+		and t.parent_id =#{parentId}
+		</if>
+		<if test="branchNature != null">
+		and t.branch_nature =#{branchNature}
+		</if>
+		<if test="branchLevel != null">
+		and t.branch_level =#{branchLevel}
+		</if>
+		<if test="branchPath != null">
+		and t.branch_path =#{branchPath}
+		</if>
+		<if test="address != null">
+		and t.address =#{address}
+		</if>
+		<if test="phone != null">
+		and t.phone =#{phone}
+		</if>
+		<if test="contact != null">
+		and t.contact =#{contact}
+		</if>
+		<if test="fullSpell != null">
+		and t.full_spell =#{fullSpell}
+		</if>
+		<if test="simpleSpell != null">
+		and t.simple_spell =#{simpleSpell}
+		</if>
+		
+		<if test="vagueText">
+			and (branch_name like #{vagueText} or full_spell like #{vagueText} or simple_spell like  #{vagueText})
+		</if>
+		
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_branch t where 1=1 
+		<if test="branchId != null">
+		and t.branch_id =#{branchId}
+		</if>
+		<if test="branchName != null">
+		and t.branch_name =#{branchName}
+		</if>
+		<if test="parentId != null">
+		and t.parent_id =#{parentId}
+		</if>
+		<if test="branchNature != null">
+		and t.branch_nature =#{branchNature}
+		</if>
+		<if test="branchLevel != null">
+		and t.branch_level =#{branchLevel}
+		</if>
+		<if test="branchPath != null">
+		and t.branch_path =#{branchPath}
+		</if>
+		<if test="address != null">
+		and t.address =#{address}
+		</if>
+		<if test="phone != null">
+		and t.phone =#{phone}
+		</if>
+		<if test="contact != null">
+		and t.contact =#{contact}
+		</if>
+		<if test="fullSpell != null">
+		and t.full_spell =#{fullSpell}
+		</if>
+		<if test="simpleSpell != null">
+		and t.simple_spell =#{simpleSpell}
+		</if>
+	</select>
+
+</mapper>

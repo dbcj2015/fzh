@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>找资源，用云搜</title>
+<!-- Boot的准备工作 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	var page = 1;
+	
+	function showList(q , p){
+		$.ajax({
+			url : "search",
+			data : {"q" : q, "page" : p},
+			dataType : "json",
+			success : function(json){
+				console.info(json);
+				var list = json.showapi_res_body.pagebean.contentlist;
+				for(var i = 0 ; i < list.length ; i++){
+					var nd = list[i];
+					var a = "<h4><button type='button' url='{URL}' class='list-group-item gi'>{TITLE}</a></h4>";
+					a = a.replace("{TITLE}" , "[" + nd.category + "]" + nd.title).replace("{URL}" , nd.url);
+					
+					$("#contentlist").append($.trim(a));
+				}
+				$(".gi").click(function(){
+					window.location.targ
+					window.location = $(this).attr("url");
+				});
+			}
+		});		
+	}
+	$(function(){
+		$("#btnSearch").click(function(){
+			page = 1;
+			$(".gi").remove();
+			showList($("#q").val() , page);
+		});
+		$("#btnMore").click(function(){
+			page = page + 1;
+			showList($("#q").val() , page);
+		})
+	});
+
+</script>
+</head>
+<body class="container">
+	<div class="col-xs-6 col-xs-offset-3">
+		<img alt="" src="logo.png" style="width:100%">
+	</div>
+	<div class="col-xs-12  form-group-lg" style="margin-top: 10px">
+		<!-- placeholder是H5新增的属性,代表默认的提示信息 -->
+		<input type="text" class="form-control" placeholder="请输入查询的关键字" id="q">
+		<button type="button" class="btn btn-primary btn-lg btn-block" style="margin-top:10px" id="btnSearch">查询</button>
+	</div>
+	
+	
+	<div class="col-xs-12"	>
+		<div id="contentlist" class="list-group" style="margin-top: 10px">
+		  <a href="#" class="list-group-item active" style="text-align: center;background-color: #797307">
+		 	  查询结果
+		  </a>
+		  
+		</div>
+	</div>
+	
+
+	<div class="col-xs-12" >
+		<button id="btnMore" type="button" class="btn btn-warning btn-lg btn-block" style="margin-top:10px">点击加载更多...</button>
+	</div>
+	<div class="col-xs-12" style="height:50px">&nbsp;</div>
+</body>
+</html>

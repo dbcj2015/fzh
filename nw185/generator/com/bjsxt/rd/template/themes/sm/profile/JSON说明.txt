@@ -1,0 +1,61 @@
+{	
+	//源代码根目录
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/test/" , //生成代码的目录
+	"pageDir" : "/webroot/" , --存放页面的目录
+	"mapperDir" : "/test/mappers/" ,  //存放XML的目录
+	"basePackage" : "com.bjsxt.nw185.contract", --包名
+	"dataSource" : { //数据源
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : { //实体类的配置
+		"mapperName":"contract.xml", //XML文件名
+		"package" : "entity", //实体类的包名
+		"class" : "Contract" ,  //实体类名
+		"tableName" : "t_contract", //对应得表
+		//id代表主键 ,name为实体主键的属性名  column是字段名  type则是类型
+		"id" : {"name" :"contractId" , "column":"contract_id" , "type" : "Integer"} 
+	},
+	"repository" : { //DAo配置
+		"package" : "dao",--包名
+		"class" : "ContractDAO", --类名
+		"beanId" : "contractDAO" --Bean id
+	},
+	"service" : {
+		"package" : "service", 
+		"class" : "ContractService",
+		"beanId" : "contractService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "ContractController",
+		"beanId" : "contractController",
+		"namespace" : "/contract"
+	},
+	"view" : {
+		"page" : "/contract.jsp" , //生成的界面地址
+		"title" : "合同管理", //功能名称
+		"datagrid" : { //数据表格
+			"keyfield":"contract_id" , //id列
+			"columns" : [ //表格中每一列的配置
+				{"title" : "合同日期" , "field" : "a" , "width" : "10%"},
+				{"title" : "合同编号" , "field" : "b" , "width" : "10%"},
+				{"title" : "供应商" , "field" : "c" , "width" : "10%"},
+				{"title" : "采购项目" , "field" : "d" , "width" : "10%"},
+				{"title" : "标题" , "field" : "e" , "width" : "10%"},
+				{"title" : "当前状态" , "field" : "f" , "width" : "10%"}
+			]
+		},
+		"form" : [ //表单配置 property对应实体类的属性 , type是组件类型,目前支持 text  combobox date number , required代表必填
+			{"title" : "合同编号" , "property" : "contractName" , "type":"text" , "required":true },
+			{"title" : "合同名称" , "property" : "title" , "type":"text" , "required":true},
+			{"title" : "采购项目" , "property" : "projectId" , "type" : "combobox" , "required" : true},
+			{"title" : "采购日期" , "property" : "contractDate" ,  "type" : "date" ,"required" : true},
+			{"title" : "供应商" , "property" : "venderId","type" : "combobox" ,"required" : true}
+			
+		]
+	} 
+}

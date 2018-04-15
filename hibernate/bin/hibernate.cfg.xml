@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/yangdianjie?useUnicode=true&amp;characterEncoding=UTF-8</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">root</property>
+		<!-- 为了方便调试,Hibernate会自动把生成的SQL语句打印在控制台中 -->
+		<property name="show_sql">true</property>
+		<!-- 方言,分页 Oracle  rownum     MySQL limit  SQL Server :  Top
+			OracleDialect 执行分页SQL时就使用rownum分页
+			MySQLDialect 则使用limit
+			mysql : date_format()
+			oracle: to_date()
+		 -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- 设置事务隔离级别 -->
+		<!-- <property name="org.hibernate.connection.isolation">4</property> -->
+		<!-- 注册hbm.XML文件 -->
+		<mapping  resource="com/bjsxt/hibernate/entity/goods.hbm.xml" />
+		<mapping  resource="com/bjsxt/hibernate/entity/category.hbm.xml" />
+		<!-- <mapping class="com.bjsxt.hibernate.entity.Member"></mapping> -->
+	</session-factory>
+</hibernate-configuration>

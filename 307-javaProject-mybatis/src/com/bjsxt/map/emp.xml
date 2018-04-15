@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 利用接口映射SQL操作,要求namespace中的值与DAO全路径匹配 -->
+<mapper namespace="com.bjsxt.dao.EmpDao">
+	<!-- 接口映射下,id就是方法名 -->
+	<select id="findAll" resultType="java.util.LinkedHashMap">
+		select * from emp
+	</select>
+	
+	<select id="findById" parameterType="int" resultType="java.util.LinkedHashMap">
+		select * from emp where empno = #{value}
+	</select>
+	
+	<select id="findPage" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+		select * from emp limit #{st} , #{r}
+	</select>
+	
+	<insert id="insert" parameterType="Emp">
+				INSERT INTO 
+			emp (    ename,  job,	  mgr,	  hiredate,	  sal,	  comm,	  deptno	)
+		VALUES
+		  (	 #{ename},	    #{job},	    #{mgr},	    #{hiredate},	    #{sal},	    #{comm},    #{deptno}	  )
+	</insert>
+		<!-- 修改 -->
+	<update id="update" parameterType="Emp">
+		UPDATE
+		  emp
+		SET
+		  ename = #{ename},
+		  job = #{job},
+		  mgr = #{mgr},
+		  hiredate = #{hiredate},
+		  sal = #{sal},
+		  comm = #{comm},
+		  deptno = #{deptno}
+		WHERE empno = #{empno}
+	</update>
+	
+	
+	<delete id="delete" parameterType="Integer">
+		delete from emp where empno = #{value}
+	</delete>
+</mapper>

@@ -1,0 +1,58 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"enable" : "true",
+		"mapperName":"receive.xml",
+		"package" : "entity",
+		"class" : "Receive" , 
+		"tableName" : "t_receive",
+		"id" : {"name" :"receiveId" , "column":"receive_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+	 	"enable" : "true",
+		"package" : "dao",
+		"class" : "ReceiveDAO",
+		"beanId" : "receiveDAO"
+	},
+	"service" : {
+		"enable" : "false",
+		"package" : "service",
+		"class" : "ReceiveService",
+		"beanId" : "receiveService"
+	},
+	"controller" : {
+	 	"enable" : "false",
+		"package" : "controller",
+		"class" : "ReceiveController",
+		"beanId" : "receiveController",
+		"namespace" : "/receive"
+	},
+	"view" : {
+	 	"enable" : "true",
+		"page" : "/receive.jsp" ,
+		"title" : "设备接收" ,
+		"datagrid" : {
+			"keyfield":"receiveId" ,
+			"columns" : [
+			 	{"title" : "设备类型" , "field" : "goodstypeName" , "width" : "20%"},
+				{"title" : "设备品牌" , "field" : "brandName" , "width" : "20%"},
+				{"title" : "设备型号" , "field" : "productName" , "width" : "20%"},
+				{"title" : "划拨数量" , "field" : "num" , "width" : "10%"}
+			]
+		},
+		"form" : [
+			{"title" : "冗余可以删除" , "property" : "goodstypeId" ,  "type" : "combobox" ,"required" : true}
+		]
+	} 
+}

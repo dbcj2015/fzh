@@ -1,0 +1,52 @@
+{
+	
+	"baseDir": "E:/MyEclipseWorkSpace/ICBC02" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/picbc?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : "root"
+	},
+	"model" : {
+		"mapperName":"goodstype.xml",
+		"package" : "entity",
+		"class" : "GoodsType" , 
+		"tableName" : "t_goodstype",
+		"id" : {"name" :"goodstypeId" , "column":"goodstype_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "GoodsTypeDAO",
+		"beanId" : "goodsTypeDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "GoodsTypeService",
+		"beanId" : "goodsTypeService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "GoodsTypeController",
+		"beanId" : "goodsTypeController",
+		"namespace" : "/goodstype"
+	},
+	"view" : {
+		"context" : "/hdjy-crm",
+		"page" : "/goodstype.jsp" ,
+		"datagrid" : {
+			"keyfield":"goodstype_id" ,
+			"columns" : [
+				{"title" : "类型编号" , "field" : "goodstypeId" , "width" : "10%"},
+				{"title" : "设备类型" , "field" : "goodstypeName" , "width" : "20%"}
+			]
+		},
+		"form" : [
+			{"title" : "设备类型" , "property" : "goodstypeName" ,  "type" : "text" ,"required" : true}
+			
+		]
+	} 
+}

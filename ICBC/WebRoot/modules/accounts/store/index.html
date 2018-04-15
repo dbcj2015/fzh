@@ -1,0 +1,65 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridStore").datagrid({
+					url:"modules/accounts/store/store.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'合同编号',width:100 },
+						{field:'b',title:'项目名称',width:100},
+						{field:'c',title:'设备类型',width:100},
+						{field:'d',title:'设备品牌',width:100},
+						{field:'e',title:'设备型号',width:100} ,
+						{field:'f',title:'配置',width:100},
+						{field:'g',title:'购买数量',width:100},
+						{field:'h',title:'在库状态',width:100}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbStore' ,
+					pagination : true//分页栏
+				});
+				$("#tlbStore").click(function(){
+						$("#dlgStoreMain").dialog({
+						  width:330,
+						  height:150,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/accounts/store/editform.html'
+						});
+					}
+				);
+			}
+		);
+	</script>
+    
+	<table id = 'gridStore'></table>
+    <div id="tbStore">
+		<div style="padding: 5px 0px 5px 5px">
+            <label>项目名称:</label>
+            <select class="easyui-combobox" style = "width:100px">
+                <option value="0">全部</option>
+                <option value="1">项目1</option>
+                <option value="2">项目2</option>
+            </select>
+            
+            <label>&nbsp;&nbsp;合同编号:</label>
+           	<input class="easyui-validatebox" type="text" name="a" style = "width:150px"/>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a>
+            <a id = "tlbStore" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">办理入库</a>
+            
+        </div>
+	</div>
+    <div id="dlgStoreMain"></div>
+</body>
+</html>

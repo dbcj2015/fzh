@@ -1,0 +1,41 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%--九大内置对象:
+	转译的时候自动生成对象,可以在jsp中直接调用
+ --%>
+<html>
+	<head></head>
+	<body>
+		<!-- 
+			九大内置对象学习:
+				特点：所谓内置对象就是对象是jsp在转译的时候隐式的声明的，不是又程序员来直接声明的。
+					所以内置对象只能显示的在jsp中进行调用。
+				使用：
+					在jsp页面直接调用即可
+				内容：
+					四个作用域
+					两个输出
+					三个打酱油
+		 -->	
+		<h3>九大内置对象学习</h3>
+		<ul>
+			<h4>四个作用域</h4>
+			<li>pageContext：页面上下文对象，当前页面内有效</li>
+			<!--1、引用内部保存的对象内存地址，所以方法结束变量立即销毁，但是引用指向的对象不会立即销毁，等待垃圾回收器回收
+				2、pageContext对象有其他8个对象对应的get()方法:得到pageContext对象，就得到当前jsp中所有的数据信息
+				3、request对象如果没有请求转发，其作用域就是当前所在的servlet范围内;通过请求转发,request对象发生了流转,
+				       作用域发生了变化,只有当转发对应的servlet都执行完,request对象才会被销毁
+				4、 pageContext在没有显式调用或者显式的流转之前，其作用域就是当前页面内有效 
+			  -->
+			<li>request：一次请求内</li>
+			<li>session：一次会话</li>
+			<li>application:一个项目</li>
+			<h4>两个输出</h4>
+			<li>response</li>
+			<li>out</li>
+			<h4>三个打酱油</h4>
+			<li>config</li>
+			<li>page</li>
+			<li>exception</li>
+		</ul>
+	</body>
+</html>

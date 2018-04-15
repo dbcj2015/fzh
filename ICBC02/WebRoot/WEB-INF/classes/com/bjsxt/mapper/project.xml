@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.ProjectDAO">
+<insert id="insert" parameterType="com.bjsxt.nw185.entity.Project">
+		INSERT INTO t_project (project_name,year)
+		VALUES (#{projectName},#{year})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Project">
+		UPDATE t_project
+			SET  
+				project_id = #{projectId}
+				,project_name = #{projectName}
+				,year = #{year}
+			WHERE project_id = #{projectId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_project where project_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="java.util.LinkedHashMap">
+		select * from t_project where project_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select p.* , concat(cast(p.year as char) , '年' , p.project_name) fullname from t_project p 
+	</select>
+
+
+</mapper>

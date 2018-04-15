@@ -1,0 +1,97 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#grid").datagrid({
+					url:"modules/accounts/purchase/purchase.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'g',title:'项目名称',width:100 },
+						{field:'a',title:'合同编号',width:100 },
+						{field:'b',title:'单位名称',width:100},
+						{field:'c',title:'合同名称',width:100},
+						{field:'d',title:'合同金额',width:100},
+						{field:'e',title:'供应商',width:100} 
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tb' ,
+					pagination : true//分页栏
+				});
+				$("#tlbNew , #tlbEdit").click(function(){
+						$("#dlgMain").dialog({
+						  width:330,
+						  height:280,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/accounts/purchase/editform.html'
+						});
+					}
+				);
+				$("#tlbPay").click(function(){
+					$.messager.confirm('警告', '您确定要对选中的合同进行支付吗?', function(r){
+						if (r){
+							// exit action;
+						}
+					});
+				});
+				
+				$("#tlbDetail").click(function(){
+					$("#tabsContainer").tabs("add" , {
+						title : "查看合同明细" , 
+						closable : true , 
+						selected : true ,
+						href : "modules/accounts/purchaseDetail/index.html"
+					});						
+				});
+				
+				$("#tlbDelete").click(function(){
+					$.messager.confirm('警告', '确定要删除选中的记录吗?', function(r){
+						if (r){
+							// exit action;
+						}
+					});
+				})
+			}
+		);
+	</script>
+    
+	<table id = 'grid'></table>
+    <div id="tb">
+   		<div style="border-bottom:1px solid #ccc ; padding: 5px 0px 5px 5px">
+        	<a id = "tlbNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新建</a>
+			<a id = "tlbEdit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a id = "tlbDetail" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">查看明细</a>
+            <a id = "tlbDelete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        </div>
+
+		<div style="padding: 5px 0px 5px 5px">
+            <label>项目名称:</label>
+            <select class="easyui-combobox" style = "width:100px">
+                <option value="0">项目1</option>
+                <option value="1">项目2</option>
+                <option value="2">项目3</option>
+            </select>
+            
+            <label>&nbsp;&nbsp;供应商:</label>
+            <select class="easyui-combobox" style = "width:100px" >
+                <option value="0">供应商1</option>
+                <option value="1">供应商2</option>
+                <option value="2">供应商3</option>
+            </select>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a>
+            </label>
+        </div>
+	</div>
+    <div id="dlgMain"></div>
+</body>
+</html>

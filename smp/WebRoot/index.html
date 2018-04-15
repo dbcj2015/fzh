@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SMP系统管理平台</title>
+	<!-- 主题文件 -->
+	<link href="themes/insdep/easyui.css" rel="stylesheet" type="text/css">
+	<link href="themes/insdep/easyui_animation.css" rel="stylesheet" type="text/css">
+	<link href="themes/insdep/easyui_plus.css" rel="stylesheet" type="text/css">
+	<link href="themes/insdep/insdep_theme_default.css" rel="stylesheet" type="text/css">
+	<!-- 图标CSS -->
+	<link href="themes/icon.css" rel="stylesheet" type="text/css">
+	<!-- 引入两个JS -->
+	<script type="text/javascript" src="script/jquery.min.js"></script>
+	<script type="text/javascript" src="script/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="themes/insdep/jquery.insdep-extend.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#treeFunction").tree({
+				onClick : function(node){//树的单击事件
+					console.info(node);
+					if(node.attributes == null || node.attributes.url == null){
+						return;	
+					}
+					
+					//如果第一个参数是字符串，则代表执行某个方法
+					var isExists = $("#tabsMain").tabs("exists" , node.text);
+					//判断选项卡是否存在，不存在则创建，存在则激活
+					if(isExists == false){
+						$("#tabsMain").tabs("add" , {
+							title : node.text,
+							closable : true ,
+							content : "<iframe  src='" + node.attributes.url + "' style='border:0px;width:100%;height:95%'/>"
+								
+						});
+					}else{
+						$("#tabsMain").tabs("select" , node.text);
+					}
+				}
+			});
+		});
+	</script>
+</head>
+<!-- Easyui中采用class=“easyui-....”的方式描述组件 -->
+<body class="easyui-layout">
+	<!-- Easyui中采用自定义属性的方式来设置选项 -->
+	<div region="north" style="height:100px">
+		<img src="images/topbar.jpg" style="width:100%;height:94px"/>
+	</div>
+	<div region="west" title ="系统列表" split="true" style="width:200px">
+		<!-- 折叠栏 -->
+		<div class="easyui-accordion" fit=true border=false>
+			<!-- iconCls 使用icon.css中的CSS类来设置图标 -->
+			<div title="SMP系统管理平台" iconCls="icon-man">
+				<ul id= "treeFunction" class="easyui-tree">
+					<li><span>组织机构管理</span>
+						<!-- 子节点 -->
+						<ul>
+							<!-- data-options用来设置Easyui的自定义属性，attributes是指设置tree组件的自定义属性，其值为一个JSON对象 -->
+							<li data-options="attributes:{url:'http://www.sina.com'}" iconCls="icon-filter"><span >部门管理</span></li>
+							<li data-options="attributes:{url:'http://www.zhaopin.com'}"><span>组织机构管理</span></li>
+						</ul>
+					
+					</li>
+					<li><span>角色管理</span>
+						<ul>
+							<li data-options="attributes:{url:'http://www.duowan.com'}"><span>职位管理</span></li>
+							<li data-options="attributes:{url:'emp.html'}"><span>员工管理</span></li>
+							<li><span>角色管理</span></li>
+						</ul>
+					
+					</li>
+					<li><span>菜单管理</span></li>
+				</ul>
+			</div>
+			<div title="借款人销售系统" iconCls="icon-ok">22</div>
+		</div>
+	</div>
+	<div region="center">
+		<div id="tabsMain" class="easyui-tabs" fit=true border=false>
+			<div title="首页" style="background-image: url(images/welcome.jpg);background-size:100% 100%"></div>
+			
+		</div>
+	</div>
+</body>
+</html>

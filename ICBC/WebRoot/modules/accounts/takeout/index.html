@@ -1,0 +1,75 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+	<script>
+		$(
+			function(){
+				//将jobGrid Table 绘制成单元格
+				$("#gridTakeOut").datagrid({
+					url:"modules/accounts/takeout/takeout.json",
+					//定义列
+					columns:
+					[
+						[
+						{field:'a',title:'设备类型',width:100 },
+						{field:'b',title:'设备品牌',width:100},
+						{field:'c',title:'设备型号',width:100},
+						{field:'d',title:'库存数量',width:100},
+						{field:'e',title:'领用数量',width:100 ,editor:'text' , 
+							formatter : function(value , row , index){return "<input type = 'text' value = '2'></input>"}}
+						]
+					],
+					singleSelect:true,//单选模式
+					fit:true, //平铺	
+					toolbar : '#tbTakeOut' ,
+					pagination : true//分页栏
+				});
+				
+				$("#gridTakeOut").datagrid('beginEdit', 0);
+				
+				$("#btnTakeOut").click(function(){
+						$("#dlgTakeOutMain").dialog({
+						  width:800,
+						  height:280,
+						  modal:true,
+						  title : ' ' , 
+						  href : 'modules/accounts/takeout/editform.html'
+						});
+					}
+				);
+			}
+		);
+	</script>
+    
+	<table id = 'gridTakeOut'></table>
+    <div id="tbTakeOut">
+		<div style="padding: 5px 0px 5px 5px">
+            <label>设备类型:</label>
+            <select class="easyui-combobox" style = "width:100px">
+                <option value="0">设备类型1</option>
+                <option value="1">设备类型2</option>
+                <option value="2">设备类型3</option>
+            </select>
+            
+            <label>&nbsp;&nbsp;设备品牌:</label>
+            <select class="easyui-combobox" style = "width:100px" >
+                <option value="0">设备品牌1</option>
+                <option value="1">设备品牌2</option>
+                <option value="2">设备品牌3</option>
+            </select>
+            <label>&nbsp;&nbsp;设备型号:</label>
+            <select class="easyui-combobox" style = "width:100px" >
+                <option value="0">设备型号1</option>
+                <option value="1">设备型号2</option>
+                <option value="2">设备型号3</option>
+            </select>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a>
+            <a id="btnTakeOut"href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">领用登记</a>
+        </div>
+	</div>
+    <div id="dlgTakeOutMain"></div>
+</body>
+</html>

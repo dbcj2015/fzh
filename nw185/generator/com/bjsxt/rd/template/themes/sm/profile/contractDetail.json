@@ -1,0 +1,58 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"contractDetail.xml",
+		"package" : "entity",
+		"class" : "ContractDetail" , 
+		"tableName" : "t_contract_detail",
+		"id" : {"name" :"cdId" , "column":"cd_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "ContractDetailDAO",
+		"beanId" : "contractDetailDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "ContractDetailService",
+		"beanId" : "contractDetailService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "ContractDetailController",
+		"beanId" : "contractDetailController",
+		"namespace" : "/contractDetail"
+	},
+	"view" : {
+		"page" : "/contractDetail.jsp" ,
+		"title" : "合同明细管理" ,
+		"datagrid" : {
+			"keyfield":"cdId" ,
+			"columns" : [
+				{"title" : "设备型号" , "field" : "productId" , "width" : "10%"},
+				{"title" : "采购数量" , "field" : "num" , "width" : "10%"},
+				{"title" : "单价" , "field" : "price" , "width" : "10%"},
+				{"title" : "保修期(月)" , "field" : "guaranteeTerm" , "width" : "10%"},
+				{"title" : "巡检阀值" , "field" : "checkFrequency" , "width" : "10%"}
+			]
+		},
+		"form" : [
+			{"title" : "设备型号" , "property" : "productId" ,  "type" : "combobox" ,"required" : true},
+			{"title" : "采购数量" , "property" : "num" ,  "type" : "number" ,"required" : true},
+			{"title" : "单价" , "property" : "price" ,  "type" : "number" ,"required" : true},
+			{"title" : "保修期(月)" , "property" : "guaranteeTerm" ,  "type" : "number" ,"required" : true},
+			{"title" : "巡检阀值" , "property" : "checkFrequency" ,  "type" : "number" ,"required" : true}
+		]
+	} 
+}

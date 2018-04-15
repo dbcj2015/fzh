@@ -1,0 +1,15 @@
+1. JFINAL 默认提供了对Freemarker的支持
+	主流的MVC框架:Struts \ SpringMVC都对Freemarker有良好的支持
+	BUT, Servlet 不支持!!
+
+2. JFINAL操作步骤:
+	(1) 复制jar包
+	(2) 在Web-inf目录下创建ftl目录
+	(3) 在ftl目录下创建xxxx.ftl文件,这是模板文件
+	(4) 在controller跳转的时候,return "/web-inf/ftl/xxx.ftl"
+	
+3. Jfinal中使用freemarker的取值问题:
+	放在request中的属性直接${}
+	放在session中的属性需要设置
+	me.add(new SessionInViewInterceptor());
+	使用时使用${session.xxxxxx}

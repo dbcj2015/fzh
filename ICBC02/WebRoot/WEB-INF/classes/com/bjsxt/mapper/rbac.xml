@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.RbacDao">
+	<select id="findModuals" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+		select distinct m.modual_id,m.modual_name,m.modual_icon
+			from t_function f,t_role_function rf,t_modual m
+			where rf.function_id=f.function_id
+			and f.modual_id=m.modual_id
+			and rf.role_id in
+			<foreach collection="roles" open="(" separator="," close=")" item="r" >
+				#{r}
+			</foreach>
+	</select>
+	<select id="findRolesById" parameterType="Integer" resultType="java.util.LinkedHashMap">
+		SELECT er.role_id
+		from t_employee e,t_employee_role er
+		where e.emp_id=er.emp_id and e.emp_id=#{value}
+	</select>
+	<!-- 根据模块查询功能 -->
+	<select id="findFuncByModuals" parameterType="List" resultType="java.util.LinkedHashMap">
+		select * from t_function f,t_modual m
+		where f.modual_id=m.modual_id
+		and f.modual_id=#{value}
+		
+	</select>
+</mapper>

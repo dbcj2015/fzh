@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="emp">
+	<!-- 实现多个表关联查询 -->
+	<select id="selectAll" resultType="java.util.LinkedHashMap">
+		select * from emp e,dept d WHERE e.deptno=d.deptno 
+	</select>
+	<select id="entity" resultType="com.bjsxt.entity.Emp">
+		select 
+			e.* ,
+			de.deptno as 'd.deptno' , 
+			de.dname as 'd.dname',
+			de.loc as 'd.loc'
+		from emp e,dept de WHERE e.deptno=de.deptno 
+	</select>
+	<select id="findById" parameterType="int" resultType="com.bjsxt.entity.Emp">
+		select * from emp where empno=#{value}
+	</select>
+	
+	<select id="sal_price" resultType="com.bjsxt.entity.Emp">
+	<!-- 当有个别字段存在下划线这种情况时，使用以下方法处理 -->
+		select 
+			ename,job,sal_price as 'salPrice'
+		 from emp
+	</select>
+	
+	<select id="CamelCase" resultType="com.bjsxt.entity.Emp">
+	<!-- 批量处理 -->
+		select ename,job,sal_price from emp
+	</select>
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.DistributionDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Distribution" >
+		INSERT INTO t_distribution (from_branch_id,to_branch_id,dist_time,state)
+		VALUES (#{fromBranchId},#{toBranchId},#{distTime},#{state})
+		<selectKey keyProperty="distId" keyColumn="dist_id" resultType="int" order="AFTER">  
+            SELECT LAST_INSERT_ID()
+        </selectKey>  
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Distribution">
+		UPDATE t_distribution
+			SET  
+				dist_id = #{distId}
+				,from_branch_id = #{fromBranchId}
+				,to_branch_id = #{toBranchId}
+				,dist_time = #{distTime}
+				,state = #{state}
+			WHERE dist_id = #{distId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_distribution where dist_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Distribution">
+		select
+				t.dist_id distId ,
+				t.from_branch_id fromBranchId ,
+				t.to_branch_id toBranchId ,
+				t.dist_time distTime ,
+				t.state state 
+		from t_distribution t where t.dist_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.dist_id distId ,
+				t.from_branch_id fromBranchId ,
+				t.to_branch_id toBranchId ,
+				t.dist_time distTime ,
+				t.state state 
+		 from t_distribution t where 1=1 
+		<if test="distId != null">
+		and t.dist_id =#{distId}
+		</if>
+		<if test="fromBranchId != null">
+		and t.from_branch_id =#{fromBranchId}
+		</if>
+		<if test="toBranchId != null">
+		and t.to_branch_id =#{toBranchId}
+		</if>
+		<if test="distTime != null">
+		and t.dist_time =#{distTime}
+		</if>
+		<if test="state != null">
+		and t.state =#{state}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_distribution t where 1=1 
+		<if test="distId != null">
+		and t.dist_id =#{distId}
+		</if>
+		<if test="fromBranchId != null">
+		and t.from_branch_id =#{fromBranchId}
+		</if>
+		<if test="toBranchId != null">
+		and t.to_branch_id =#{toBranchId}
+		</if>
+		<if test="distTime != null">
+		and t.dist_time =#{distTime}
+		</if>
+		<if test="state != null">
+		and t.state =#{state}
+		</if>
+	</select>
+
+</mapper>

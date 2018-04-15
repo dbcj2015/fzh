@@ -1,0 +1,53 @@
+{
+	
+	"baseDir": "E:/bjsxtProject/Project-NW185/C506/20170824-0901/repository/code/nw185" ,  
+	"sourceDir" : "/src/" ,
+	"pageDir" : "/webroot/" ,
+	"mapperDir" : "/src/mappers/" , 
+	"basePackage" : "com.bjsxt.nw185",
+	"dataSource" : {
+	  "driver" : "com.mysql.jdbc.Driver",
+	  "url" : "jdbc:mysql://localhost:3306/nw185?useUnicode=true&characterEncoding=UTF-8",
+	  "username" : "root" ,
+	  "password" : ""
+	},
+	"model" : {
+		"mapperName":"module.xml",
+		"package" : "entity",
+		"class" : "Module" , 
+		"tableName" : "t_module",
+		"id" : {"name" :"moduleId" , "column":"module_id" , "type" : "Integer"} 
+	},
+	"repository" : {
+		"package" : "dao",
+		"class" : "ModuleDAO",
+		"beanId" : "moduleDAO"
+	},
+	"service" : {
+		"package" : "service",
+		"class" : "ModuleService",
+		"beanId" : "moduleService"
+	},
+	"controller" : {
+		"package" : "controller",
+		"class" : "ModuleController",
+		"beanId" : "moduleController",
+		"namespace" : "/module"
+	},
+	"view" : {
+		"title" : "功能模块管理",
+		"page" : "/promission/module.jsp" ,
+		"datagrid" : {
+			"keyfield":"moduleId" ,
+			"columns" : [
+				{"title" : "模块编号" , "field" : "moduleId" , "width" : "10%"},
+				{"title" : "模块名称" , "field" : "moduleName" , "width" : "20%"},
+				{"title" : "图标" , "field" : "icon" , "width" : "10%"}
+			]
+		},
+		"form" : [
+			{"title" : "模块名称" , "property" : "moduleName" ,  "type" : "text" ,"required" : true},
+			{"title" : "模块图标" , "property" : "icon" ,  "type" : "text" ,"required" : true}
+		]
+	} 
+}

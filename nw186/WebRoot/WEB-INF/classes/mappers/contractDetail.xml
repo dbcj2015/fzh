@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.ContractDetailDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.ContractDetail">
+		INSERT INTO t_contract_detail (contract_id,product_id,num,price,guarantee_term,check_frequency,comment,create_user,create_time,update_user,update_time,isvalid)
+		VALUES (#{contractId},#{productId},#{num},#{price},#{guaranteeTerm},#{checkFrequency},#{comment},#{createUser},#{createTime},#{updateUser},#{updateTime},#{isvalid})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.ContractDetail">
+		UPDATE t_contract_detail
+			SET  
+				cd_id = #{cdId}
+				,contract_id = #{contractId}
+				,product_id = #{productId}
+				,num = #{num}
+				,price = #{price}
+				,guarantee_term = #{guaranteeTerm}
+				,check_frequency = #{checkFrequency}
+				,comment = #{comment}
+				,create_user = #{createUser}
+				,create_time = #{createTime}
+				,update_user = #{updateUser}
+				,update_time = #{updateTime}
+				,isvalid = #{isvalid}
+			WHERE cd_id = #{cdId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_contract_detail where cd_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.ContractDetail">
+		select
+				t.cd_id cdId ,
+				t.contract_id contractId ,
+				t.product_id productId ,
+				t.num num ,
+				t.price price ,
+				t.guarantee_term guaranteeTerm ,
+				t.check_frequency checkFrequency ,
+				t.comment comment ,
+				t.create_user createUser ,
+				t.create_time createTime ,
+				t.update_user updateUser ,
+				t.update_time updateTime ,
+				t.isvalid isvalid 
+		from t_contract_detail t where t.cd_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.cd_id cdId ,
+				t.contract_id contractId ,
+				t.product_id productId ,
+				t.num num ,
+				t.price price ,
+				t.guarantee_term guaranteeTerm ,
+				t.check_frequency checkFrequency ,
+				t.comment comment ,
+				t.create_user createUser ,
+				t.create_time createTime ,
+				t.update_user updateUser ,
+				t.update_time updateTime ,
+				t.isvalid isvalid ,
+				t.state,
+				p.product_name productName , 
+				g.goodstype_name goodstypeName,
+				b.brand_name brandName 
+		 from t_contract_detail t , t_product p , t_goodstype g , t_brand b
+		 where 1=1 
+		 and t.product_id = p.product_id  and p.goodstype_id = g.goodstype_id and p.brand_id = b.brand_id 
+		<if test="cdId != null">
+		and t.cd_id =#{cdId}
+		</if>
+		<if test="contractId != null">
+		and t.contract_id =#{contractId}
+		</if>
+		<if test="productId != null">
+		and t.product_id =#{productId}
+		</if>
+		<if test="num != null">
+		and t.num =#{num}
+		</if>
+		<if test="price != null">
+		and t.price =#{price}
+		</if>
+		<if test="guaranteeTerm != null">
+		and t.guarantee_term =#{guaranteeTerm}
+		</if>
+		<if test="checkFrequency != null">
+		and t.check_frequency =#{checkFrequency}
+		</if>
+		<if test="comment != null">
+		and t.comment =#{comment}
+		</if>
+		<if test="createUser != null">
+		and t.create_user =#{createUser}
+		</if>
+		<if test="createTime != null">
+		and t.create_time =#{createTime}
+		</if>
+		<if test="updateUser != null">
+		and t.update_user =#{updateUser}
+		</if>
+		<if test="updateTime != null">
+		and t.update_time =#{updateTime}
+		</if>
+		<if test="isvalid != null">
+		and t.isvalid =#{isvalid}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+		<if test="state != null">
+			and state=#{state}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_contract_detail t where 1=1 
+		<if test="cdId != null">
+		and t.cd_id =#{cdId}
+		</if>
+		<if test="contractId != null">
+		and t.contract_id =#{contractId}
+		</if>
+		<if test="productId != null">
+		and t.product_id =#{productId}
+		</if>
+		<if test="num != null">
+		and t.num =#{num}
+		</if>
+		<if test="price != null">
+		and t.price =#{price}
+		</if>
+		<if test="guaranteeTerm != null">
+		and t.guarantee_term =#{guaranteeTerm}
+		</if>
+		<if test="checkFrequency != null">
+		and t.check_frequency =#{checkFrequency}
+		</if>
+		<if test="comment != null">
+		and t.comment =#{comment}
+		</if>
+		<if test="createUser != null">
+		and t.create_user =#{createUser}
+		</if>
+		<if test="createTime != null">
+		and t.create_time =#{createTime}
+		</if>
+		<if test="updateUser != null">
+		and t.update_user =#{updateUser}
+		</if>
+		<if test="updateTime != null">
+		and t.update_time =#{updateTime}
+		</if>
+		<if test="isvalid != null">
+		and t.isvalid =#{isvalid}
+		</if>
+	</select>
+
+</mapper>

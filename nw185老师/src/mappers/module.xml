@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.ModuleDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Module">
+		INSERT INTO t_module (module_name,icon)
+		VALUES (#{moduleName},#{icon})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Module">
+		UPDATE t_module
+			SET  
+				module_id = #{moduleId}
+				,module_name = #{moduleName}
+				,icon = #{icon}
+			WHERE module_id = #{moduleId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_module where module_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Module">
+		select
+				t.module_id moduleId ,
+				t.module_name moduleName ,
+				t.icon icon 
+		from t_module t where t.module_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select 
+				t.module_id moduleId ,
+				t.module_name moduleName ,
+				t.icon icon 
+		 from t_module t where 1=1 
+		<if test="moduleId != null">
+		and t.module_id =#{moduleId}
+		</if>
+		<if test="moduleName != null">
+		and t.module_name =#{moduleName}
+		</if>
+		<if test="icon != null">
+		and t.icon =#{icon}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_module t where 1=1 
+		<if test="moduleId != null">
+		and t.module_id =#{moduleId}
+		</if>
+		<if test="moduleName != null">
+		and t.module_name =#{moduleName}
+		</if>
+		<if test="icon != null">
+		and t.icon =#{icon}
+		</if>
+	</select>
+
+</mapper>

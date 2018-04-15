@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- 主题文件 -->
+<link href="themes/default/easyui.css" rel="stylesheet" type="text/css">
+<!-- 图标CSS -->
+<link href="themes/icon.css" rel="stylesheet" type="text/css">
+<!-- 先导入jquery.js,再导入easyui-min.js;easyui是在jquery基础上包装而成 -->
+<script type="text/javascript" src="script/jquery.min.js"></script>
+<script type="text/javascript" src="script/jquery.easyui.min.js"></script>
+</head>
+<script type="text/javascript">
+	$(function() {
+		$("#treeFunction").tree({
+			onClick : function(node) {//树的单击事件，只要是树的子节点，都会通过参数note返回值
+				//console.info(node);
+				//alert(note.text);
+				if(node.attributes==null || node.attributes.url==null){
+					return;
+				}
+				var isExists = $("#tabsMain").tabs("exists" , node.text);
+				if(isExists==false){
+					$("#tabsMain").tabs("add",{
+						title:node.text,
+						closable:"true",
+						content:"<iframe src='"+node.attributes.url+"'style='width:100%;height:100%'/>",
+					});
+				}else{
+					$("#tabsMain").tabs("select" , node.text);
+				}
+			}
+		});
+	});
+</script>
+<body class="easyui-layout">
+	<div region="north" style="height:100px">
+		<img src="images/topbar.jpg" style="width:100%;height:94px" />
+	</div>
+	<!-- split为true时用户可以通过分割栏改变面板大小。 -->
+	<div region="west" title="系统列表" style="width:200px" split="true">
+		<!-- 折叠栏 -->
+		<div class="easyui-accordion" fit="true" border="true">
+			<div title="SMP系统管理平台" iconCls="icon-man">
+				<ul class="easyui-tree" id="treeFunction">
+					<li><span>组织机构管理</span>
+						<ul>
+						<!-- data-options用来设置Easyui的自定义属性，attributes是指设置tree组件的自定义属性，其值为一个JSON对象 -->
+							<li iconCls="icon-filter" data-options="attributes:{url:'http://www.sina.com'}"><span>部门管理</span></li>
+							<li><span>组织机构管理</span></li>
+						</ul></li>
+					<li><span>角色管理</span>
+						<ul>
+						
+							<li><span>职位管理</span></li>
+							<li data-options="attributes:{url:'emp.html'}"><span>员工管理</span></li>
+							<li><span>角色管理</span></li>
+						</ul></li>
+					<li><span>菜单管理</span></li>
+				</ul>
+			</div>
+			<div title="借款人销售系统" iconCls="icon-ok">22</div>
+		</div>
+	</div>
+	<div region="center">
+		<!-- 所有的tab共享id -->
+		<div class="easyui-tabs" fit=true border=false id="tabsMain">
+			<div title="第一页" style="background-image: url(images/welcome.jpg)"></div>
+			<div title="第二页"></div>
+		</div>
+	</div>
+</body>
+</html>

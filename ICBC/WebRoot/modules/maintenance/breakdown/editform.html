@@ -1,0 +1,49 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body >
+<style>
+	#storeEditform table td{
+		padding : 3px;
+	}
+</style>
+
+<form id="coverEditform" method="post" style="margin:5px">
+    <table>
+        <tr>
+            <td>
+                <label>设备概要</label>
+            </td>
+            <td>
+                JQM1899817 打印机 HP DL500 
+            </td>
+        </tr> 
+        
+        <tr>
+            <td>
+                <label>故障现象</label>
+            </td>
+            <td>
+                <textarea style="width:150"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>故障时间</label>
+            </td>
+            <td>
+                <input class="easyui-datebox"  style = "width:150px"/>
+            </td>
+        </tr>                                  
+    </table>
+    
+    <div style = "margin:10px 0px 0px 70px">
+    	<a id = "btnCoverSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+    </div>    
+</form>
+<div id="dlgRecoverEditMain"></div>
+</body>
+</html>

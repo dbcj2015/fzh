@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.dao.ProductDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.entity.Product">
+		INSERT INTO t_product (product_name,goodstype_id,brand_id)
+		VALUES (#{productName},#{goodstypeId},#{brandId})
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.entity.Product">
+		UPDATE t_product
+			SET  
+				product_id = #{productId}
+				,product_name = #{productName}
+				,goodstype_id = #{goodstypeId}
+				,brand_id = #{brandId}
+			WHERE product_id = #{productId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_product where product_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="java.util.LinkedHashMap">
+		select * from t_product where product_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select * from t_product 
+	</select>
+
+
+</mapper>

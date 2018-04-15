@@ -1,0 +1,114 @@
+package com.bjsxt.nw185.controller;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
+
+import com.bjsxt.nw185.entity.ContractDetail;
+import com.bjsxt.nw185.service.ContractDetailService;
+import com.google.gson.Gson;
+
+@Controller("contractDetailController")
+@RequestMapping("/contractDetail")
+public class ContractDetailController {
+	@Resource(name="contractDetailService")
+	private ContractDetailService contractDetailService = null;
+	
+	@RequestMapping("/list")
+	@ResponseBody
+	public String list(Integer page , Integer rows){
+		Integer startIndex = (page - 1) * rows;
+		Map params = new HashMap();
+		params.put("st" , startIndex);
+		params.put("r" , rows);
+		List<Map> list = contractDetailService.findByProperty(params);
+		Long cnt = contractDetailService.countByProperty(params);
+		Map result = new HashMap();
+		result.put("total" , cnt);
+		result.put("rows" , list);
+		return new Gson().toJson(result);
+	}
+	
+	@RequestMapping("/findByProperty")
+	@ResponseBody
+	public String findByProperty(HttpServletRequest request){
+		//这段代码的作用是,遍历所有的请求参数,将其包装为Map对象
+		Map params = new HashMap();
+		Map<String,String[]> rparam = request.getParameterMap();
+		Iterator itr = rparam.entrySet().iterator();
+		while(itr.hasNext()){
+			Map.Entry<String, String[]> me = (Map.Entry<String, String[]>)itr.next();
+			if(me.getValue().length == 1){
+				params.put(me.getKey(), me.getValue()[0]);
+			}else{
+				params.put(me.getKey(), me.getValue());
+			}
+			
+		}
+		List<Map> list = contractDetailService.findByProperty(params);
+		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("/create")
+	@ResponseBody
+	public String create(ContractDetail entity , WebRequest request){
+		Map result = new LinkedHashMap();
+		try{
+			entity.setCreateTime(new Date());
+			Map user = (Map)request.getAttribute("loginuser", WebRequest.SCOPE_SESSION);
+			entity.setCreateUser((Integer)user.get("user_id"));
+			entity.setIsvalid(1);//记录是有效的
+			contractDetailService.create(entity);
+			result.put("result" , true);
+			result.put("message" , "数据创建成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			result.put("result" , false);
+			result.put("message" , "数据创建失败");
+		}
+		return new Gson().toJson(result);
+	}
+	
+	@RequestMapping("/update")
+	@ResponseBody
+	public String update(ContractDetail entity){
+		Map result = new LinkedHashMap();
+		try{
+			contractDetailService.update(entity);
+			result.put("result" , true);
+			result.put("message" , "数据更新成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			result.put("result" , false);
+			result.put("message" , "数据更新失败,请查看日志");
+		}
+		return new Gson().toJson(result);
+	}
+	
+	@RequestMapping("/delete")
+	@ResponseBody
+	public String delete(Integer id){
+		Map result = new LinkedHashMap();
+		try{
+			contractDetailService.delete(id);
+			result.put("result" , true);
+			result.put("message" , "数据删除成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			result.put("result" , false);
+			result.put("message" , "数据删除失败,请查看日志");
+		}
+		return new Gson().toJson(result);
+	}
+}

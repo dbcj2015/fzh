@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.nw185.dao.TakebackDAO">
+
+	<insert id="insert" parameterType="com.bjsxt.nw185.entity.Takeback">
+		INSERT INTO t_takeback (asset_id,sn,takeback_time,operator,operator_time , user_id)
+		VALUES (#{assetId},#{sn},#{takebackTime},#{operator},#{operatorTime} , #{userId})
+		<selectKey keyProperty="takebackId" keyColumn="takeback_id" resultType="Integer" order="AFTER">  
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<update id="update" parameterType="com.bjsxt.nw185.entity.Takeback">
+		UPDATE t_takeback
+			SET  
+				takeback_id = #{takebackId}
+				,asset_id = #{assetId}
+				,sn = #{sn}
+				,takeback_time = #{takebackTime}
+				,operator = #{operator}
+				,operator_time = #{operatorTime}
+				,user_id = #{userId}
+			WHERE takeback_id = #{takebackId}
+			
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM t_takeback where takeback_id = #{value}
+	</delete>
+	
+	<select id="findById" parameterType="Integer" resultType="com.bjsxt.nw185.entity.Takeback">
+		select
+				t.takeback_id takebackId ,
+				t.asset_id assetId ,
+				t.sn sn ,
+				t.takeback_time takebackTime ,
+				t.operator operator ,
+				t.operator_time operatorTime ,
+				t.user_id userId  
+		from t_takeback t where t.takeback_id = #{value}
+	</select>
+	
+	<select id="findByProperty" parameterType="java.util.Map"   resultType="java.util.LinkedHashMap">
+		select * from t_takeback t where 1=1 
+		<if test="takebackId != null">
+		and t.takeback_id =#{takebackId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="sn != null">
+		and t.sn =#{sn}
+		</if>
+		<if test="takebackTime != null">
+		and t.takeback_time =#{takebackTime}
+		</if>
+		<if test="operator != null">
+		and t.operator =#{operator}
+		</if>
+		<if test="operatorTime != null">
+		and t.operator_time =#{operatorTime}
+		</if>
+		<if test="st != null and r != null">
+			limit #{st} , #{r}
+		</if>
+	</select>
+
+	<select id="countByProperty" parameterType="java.util.Map"   resultType="Long">
+		select count(*) cnt from t_takeback t where 1=1 
+		<if test="takebackId != null">
+		and t.takeback_id =#{takebackId}
+		</if>
+		<if test="assetId != null">
+		and t.asset_id =#{assetId}
+		</if>
+		<if test="sn != null">
+		and t.sn =#{sn}
+		</if>
+		<if test="takebackTime != null">
+		and t.takeback_time =#{takebackTime}
+		</if>
+		<if test="operator != null">
+		and t.operator =#{operator}
+		</if>
+		<if test="operatorTime != null">
+		and t.operator_time =#{operatorTime}
+		</if>
+	</select>
+
+</mapper>
